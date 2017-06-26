@@ -19,8 +19,6 @@ namespace Consolidation\Config\Util;
  */
 class ConfigFallback extends ConfigGroup
 {
-    protected $config;
-
     /**
      * @inheritdoc
      */
