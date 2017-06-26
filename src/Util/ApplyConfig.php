@@ -27,7 +27,7 @@ class ApplyConfig
             $postfix = '.';
         }
 
-        $this->config = new ConfigMerge($config, $group, $prefix = '', $postfix);
+        $this->config = new ConfigMerge($config, $group, $prefix, $postfix);
     }
 
     /**
