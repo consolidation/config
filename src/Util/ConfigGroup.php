@@ -36,7 +36,7 @@ abstract class ConfigGroup
      * Get the requested configuration key from the most specific configuration
      * group that contains it.
      */
-    public abstract function get($key);
+    abstract public function get($key);
 
     /**
      * Given a group name, such as "foo.bar.baz", return the next configuration
