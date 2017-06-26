@@ -22,16 +22,16 @@ class ConfigMerge extends ConfigGroup
     {
         $configKey = "{$prefix}{$group}${postfix}{$key}";
         $result = [];
-        if ($this->has($configKey)) {
-            $result = $this->get($configKey);
-        } elseif ($this->hasDefault($configKey)) {
-            $result = $this->getDefault($configKey);
+        if ($this->config->has($configKey)) {
+            $result = $this->config->get($configKey);
+        } elseif ($this->config->hasDefault($configKey)) {
+            $result = $this->config->getDefault($configKey);
         }
         if (!is_array($result)) {
             throw new \UnexpectedValueException($configKey . ' must be a list of settings to apply.');
         }
-        $moreGeneralGroupname = preg_replace('#\.[^.]*$#', '', $group);
-        if ($moreGeneralGroupname != $group) {
+        $moreGeneralGroupname = $this->moreGeneralGroupName($group);
+        if ($moreGeneralGroupname) {
             $result += $this->getWithMerge($key, $moreGeneralGroupname, $prefix, $postfix);
         }
         return $result;

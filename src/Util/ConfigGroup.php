@@ -24,7 +24,7 @@ abstract class ConfigGroup
     protected $prefix;
     protected $postfix;
 
-    public function __constructor($config, $group, $prefix = '', $postfix = '.')
+    public function __construct($config, $group, $prefix = '', $postfix = '.')
     {
         $this->config = $config;
         $this->group = $group;
