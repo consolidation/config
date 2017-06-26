@@ -23,6 +23,10 @@ class ApplyConfig
 
     public function __constructor($config, $group, $prefix = '', $postfix = '.')
     {
+        if (!empty($group) && empty($postfix)) {
+            $postfix = '.';
+        }
+
         $this->config = new ConfigMerge($config, $group, $prefix = '', $postfix);
     }
 
@@ -39,11 +43,8 @@ class ApplyConfig
      * setter methods should do this. This test is insufficient to guarentee
      * that the method is valid, but it would catch almost every misuse.
      */
-    public function apply($object, $configurationKey, $group = '', $prefix = '', $postfix = '')
+    public function apply($object, $configurationKey)
     {
-        if (!empty($group) && empty($postfix)) {
-            $postfix = '.';
-        }
         $settings = $this->config->get($configurationKey);
         foreach ($settings as $setterMethod => $args) {
             // TODO: Should it be possible to make $args a nested array

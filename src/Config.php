@@ -3,7 +3,7 @@ namespace Consolidation\Config;
 
 use Dflydev\DotAccessData\Data;
 
-class Config
+class Config implements ConfigInterface
 {
     /**
      * @var Data
