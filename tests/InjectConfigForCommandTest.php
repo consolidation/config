@@ -63,7 +63,7 @@ EOT;
         $command = new MyFooCommand();
         $input = new StringInput('my:foo --name=Fred');
 
-        [$status, $output] = $this->runCommandViaApplication($command, $input);
+        list($status, $output) = $this->runCommandViaApplication($command, $input);
 
         $expectedOutput = <<< EOT
 Enter my:foo
