@@ -3,6 +3,26 @@ namespace Consolidation\Config;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
+    public function testDefault()
+    {
+        $data = [
+            'a' => 'foo',
+            'b' => 'bar',
+            'c' => 'boz',
+        ];
+
+        $config = new Config($data);
+
+        $config->setDefault('c', 'other');
+        $config->setDefault('d', 'other');
+
+        $this->assertEquals('foo', $config->get('a'));
+        $this->assertEquals('boz', $config->get('c'));
+        $this->assertEquals('other', $config->get('d'));
+        $this->assertEquals('other', $config->getDefault('c'));
+        $this->assertEquals('', $config->get('e'));
+    }
+
     public function testConfigurationWithCrossFileReferences()
     {
         $config = new Config();
