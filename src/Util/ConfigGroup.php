@@ -33,6 +33,14 @@ abstract class ConfigGroup
     }
 
     /**
+     * Return a description of the configuration group (with prefix and postfix).
+     */
+    public function describe($property)
+    {
+        return $this->prefix . $this->group . $this->postfix . $property;
+    }
+
+    /**
      * Get the requested configuration key from the most specific configuration
      * group that contains it.
      */

@@ -22,21 +22,23 @@ class ApplyConfig
         $this->config = new ConfigMerge($config, $group, $prefix, $postfix);
     }
 
-    /**
-     * TODO: We could use reflection to test to see if the return type
-     * of the provided object is a reference to the object itself. All
-     * setter methods should do this. This test is insufficient to guarentee
-     * that the method is valid, but it would catch almost every misuse.
-     */
     public function apply($object, $configurationKey)
     {
         $settings = $this->config->get($configurationKey);
         foreach ($settings as $setterMethod => $args) {
-            // TODO: Should it be possible to make $args a nested array
-            // to make this code call the setter method multiple times?
             $fn = [$object, $setterMethod];
             if (is_callable($fn)) {
-                call_user_func_array($fn, (array)$args);
+                $result = call_user_func_array($fn, (array)$args);
+
+                // We require that $fn must only be used with setter methods.
+                // Setter methods are required to always return $this so that
+                // they may be chained. We will therefore throw an exception
+                // for any setter that returns something else.
+                if ($result != $object) {
+                    $methodDescription = get_class($object) . "::$setterMethod";
+                    $propertyDescription = $this->config->describe($configurationKey);
+                    throw new \Exception("$methodDescription did not return '\$this' when processing $propertyDescription.");
+                }
             }
         }
     }
