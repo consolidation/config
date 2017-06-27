@@ -45,7 +45,7 @@ class InjectConfigForCommandTest extends \PHPUnit_Framework_TestCase
         $command = new MyFooCommand();
         $input = new StringInput('my:foo');
 
-        [$status, $output] = $this->runCommandViaApplication($command, $input);
+        list($status, $output) = $this->runCommandViaApplication($command, $input);
 
         $expectedOutput = <<< EOT
 Enter my:foo
