@@ -3,6 +3,15 @@ namespace Consolidation\Config;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
+    public function testSetters()
+    {
+        // Pointless tests just to ensure everything is covered.
+        $config = new Config();
+        $config->set('foo', 'bar');
+        $data = $config->export();
+        $this->assertEquals('{"foo":"bar"}', json_encode($data));
+    }
+
     public function testDefault()
     {
         $data = [
@@ -31,6 +40,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $processor->extend($loader->load(__DIR__ . '/data/config-1.yml'));
         $processor->extend($loader->load(__DIR__ . '/data/config-2.yml'));
         $processor->extend($loader->load(__DIR__ . '/data/config-3.yml'));
+
+        // Does not fail if configuration file cannot be found
+        $processor->extend($loader->load(__DIR__ . '/data/no-such-file.yml'));
 
         // We must capture the sources before exporting, as export
         // dumps this information.

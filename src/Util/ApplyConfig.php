@@ -13,7 +13,7 @@ class ApplyConfig
 {
     protected $config;
 
-    public function __construct($config, $group, $prefix = '', $postfix = '.')
+    public function __construct($config, $group, $prefix = '', $postfix = '')
     {
         if (!empty($group) && empty($postfix)) {
             $postfix = '.';
