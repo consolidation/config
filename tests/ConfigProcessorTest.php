@@ -1,6 +1,8 @@
 <?php
 namespace Consolidation\Config\Loader;
 
+use Consolidation\TestUtils\TestLoader;
+
 class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfigProcessorAdd()
@@ -27,6 +29,56 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $data['c']);
         $this->assertEquals('foobar', $data['b']);
         $this->assertEquals('foobarbaz', $data['a']);
+    }
+
+    public function testConfigProcessorMergeAssociative()
+    {
+        $config1 = [
+            'm' => [
+                'x' => 'x-1',
+                'y' => [
+                    'r' => 'r-1',
+                    's' => 's-1',
+                    't' => 't-1',
+                ],
+                'z' => 'z-1',
+            ],
+        ];
+        $config2 = [
+            'm' => [
+                'w' => 'w-2',
+                'y' => [
+                    'q' => 'q-2',
+                    's' => 's-2',
+                ],
+                'z' => 'z-2',
+            ],
+        ];
+        $config3 = [
+            'm' => [
+                'v' => 'v-3',
+                'y' => [
+                    't' => 't-3',
+                    'u' => 'u-3',
+                ],
+                'z' => 'z-3',
+            ],
+        ];
+
+        $processor = new ConfigProcessor();
+        $testLoader = new TestLoader();
+
+        $testLoader->set($config1);
+        $processor->extend($testLoader);
+
+        $testLoader->set($config2);
+        $processor->extend($testLoader);
+
+        $testLoader->set($config3);
+        $processor->extend($testLoader);
+
+        $data = $processor->export();
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
     }
 
     public function testConfiProcessorSources()
