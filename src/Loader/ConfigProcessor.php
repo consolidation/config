@@ -174,13 +174,21 @@ class ConfigProcessor
     ) {
         $merged = $array1;
         foreach ($array2 as $key => &$value) {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = self::arrayMergeRecursiveDistinct($merged[$key], $value);
-            } else {
-                $merged[$key] = $value;
-            }
+            $merged[$key] = static::mergeRecursiveValue($merged, $key, $value);
         }
         return $merged;
+    }
+
+    /**
+     * Process the value in an arrayMergeRecursiveDistinct - make a recursive
+     * call if needed.
+     */
+    private static function mergeRecursiveValue(&$merged, $key, $value)
+    {
+        if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
+            return static::arrayMergeRecursiveDistinct($merged[$key], $value);
+        }
+        return $value;
     }
 
     /**
@@ -191,10 +199,9 @@ class ConfigProcessor
     {
         $result = [];
         foreach ($data as $key => $value) {
+            $result[$key] = $fill;
             if (static::isAssociativeArray($value)) {
                 $result[$key] = self::arrayFillRecursive($value, $fill);
-            } else {
-                $result[$key] = $fill;
             }
         }
         return $result;
