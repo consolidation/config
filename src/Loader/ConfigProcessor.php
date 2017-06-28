@@ -80,8 +80,8 @@ class ConfigProcessor
         $sources = [];
         foreach ($this->unprocessedConfig as $sourceName => $config) {
             if (!empty($sourceName)) {
-                $configSources = static::arrayFillRecursive($config, $sourceName);
-                $sources = static::arrayMergeRecursiveDistinct($sources, $configSources);
+                $configSources = self::arrayFillRecursive($config, $sourceName);
+                $sources = self::arrayMergeRecursiveDistinct($sources, $configSources);
             }
         }
         return $sources;
@@ -139,7 +139,7 @@ class ConfigProcessor
      */
     protected function reduceOne(array $processed, array $config)
     {
-        return static::arrayMergeRecursiveDistinct($processed, $config);
+        return self::arrayMergeRecursiveDistinct($processed, $config);
     }
 
     /**
@@ -174,7 +174,7 @@ class ConfigProcessor
     ) {
         $merged = $array1;
         foreach ($array2 as $key => &$value) {
-            $merged[$key] = static::mergeRecursiveValue($merged, $key, $value);
+            $merged[$key] = self::mergeRecursiveValue($merged, $key, $value);
         }
         return $merged;
     }
@@ -186,7 +186,7 @@ class ConfigProcessor
     private static function mergeRecursiveValue(&$merged, $key, $value)
     {
         if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-            return static::arrayMergeRecursiveDistinct($merged[$key], $value);
+            return self::arrayMergeRecursiveDistinct($merged[$key], $value);
         }
         return $value;
     }
@@ -200,7 +200,7 @@ class ConfigProcessor
         $result = [];
         foreach ($data as $key => $value) {
             $result[$key] = $fill;
-            if (static::isAssociativeArray($value)) {
+            if (self::isAssociativeArray($value)) {
                 $result[$key] = self::arrayFillRecursive($value, $fill);
             }
         }
