@@ -1,6 +1,6 @@
 <?php
 
-namespace Consolidation\Config;
+namespace Consolidation\Config\Loader;
 
 /**
  * Load configuration files, and fill in any property values that

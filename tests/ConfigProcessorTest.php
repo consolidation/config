@@ -1,5 +1,5 @@
 <?php
-namespace Consolidation\Config;
+namespace Consolidation\Config\Loader;
 
 class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
 {

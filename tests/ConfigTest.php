@@ -1,6 +1,9 @@
 <?php
 namespace Consolidation\Config;
 
+use Consolidation\Config\Loader\ConfigProcessor;
+use Consolidation\Config\Loader\YamlConfigLoader;
+
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetters()

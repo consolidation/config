@@ -1,6 +1,6 @@
 <?php
 
-namespace Consolidation\Config;
+namespace Consolidation\Config\Loader;
 
 use Symfony\Component\Yaml\Yaml;
 
