@@ -31,7 +31,7 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foobarbaz', $data['a']);
     }
 
-    public function testConfigProcessorMergeAssociative()
+    public function processorForConfigMergeTest($provideSourceNames)
     {
         $config1 = [
             'm' => [
@@ -69,16 +69,39 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $testLoader = new TestLoader();
 
         $testLoader->set($config1);
+        $testLoader->setSourceName($provideSourceNames ? 'c-1' : '');
         $processor->extend($testLoader);
 
         $testLoader->set($config2);
+        $testLoader->setSourceName($provideSourceNames ? 'c-2' : '');
         $processor->extend($testLoader);
 
         $testLoader->set($config3);
+        $testLoader->setSourceName($provideSourceNames ? 'c-3' : '');
         $processor->extend($testLoader);
 
+        return $processor;
+    }
+
+    public function testConfigProcessorMergeAssociative()
+    {
+        $processor = $this->processorForConfigMergeTest(false);
         $data = $processor->export();
         $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
+    }
+
+    public function testConfigProcessorMergeAssociativeWithSourceNames()
+    {
+        $processor = $this->processorForConfigMergeTest(true);
+        $sources = $processor->sources();
+        $data = $processor->export();
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
+        $this->assertEquals('c-1', $sources['m']['x']);
+        $this->assertEquals('c-1', $sources['m']['y']['r']);
+        $this->assertEquals('c-2', $sources['m']['w']);
+        $this->assertEquals('c-2', $sources['m']['y']['s']);
+        $this->assertEquals('c-3', $sources['m']['z']);
+        $this->assertEquals('c-3', $sources['m']['y']['u']);
     }
 
     public function testConfiProcessorSources()

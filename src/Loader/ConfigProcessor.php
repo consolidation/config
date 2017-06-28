@@ -80,7 +80,7 @@ class ConfigProcessor
         $sources = [];
         foreach ($this->unprocessedConfig as $sourceName => $config) {
             if (!empty($sourceName)) {
-                $configSources = static::arrayReplaceValueRecursive($config, $sourceName);
+                $configSources = static::arrayFillRecursive($config, $sourceName);
                 $sources = static::arrayMergeRecursiveDistinct($sources, $configSources);
             }
         }
@@ -184,17 +184,17 @@ class ConfigProcessor
     }
 
     /**
-     * Replaces all of the leaf-node values of a nested array with the
+     * Fills all of the leaf-node values of a nested array with the
      * provided replacement value.
      */
-    protected static function arrayReplaceValueRecursive(array $data, $replacement)
+    protected static function arrayFillRecursive(array $data, $fill)
     {
         $result = [];
         foreach ($data as $key => $value) {
             if (static::isAssociativeArray($value)) {
-                $result[$key] = self::arrayReplaceValueRecursive($value, $replacement);
+                $result[$key] = self::arrayFillRecursive($value, $fill);
             } else {
-                $result[$key] = $replacement;
+                $result[$key] = $fill;
             }
         }
         return $result;

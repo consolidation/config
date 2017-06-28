@@ -7,10 +7,16 @@ use Consolidation\Config\Loader\ConfigLoaderInterface;
 class TestLoader implements ConfigLoaderInterface
 {
     protected $data;
+    protected $sourceName;
 
     public function set($data)
     {
         $this->data = $data;
+    }
+
+    public function setSourceName($name)
+    {
+        $this->sourceName = $name;
     }
 
     public function export()
@@ -25,6 +31,6 @@ class TestLoader implements ConfigLoaderInterface
 
     public function getSourceName()
     {
-        return '';
+        return $this->sourceName;
     }
 }
