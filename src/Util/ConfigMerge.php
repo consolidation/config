@@ -21,12 +21,7 @@ class ConfigMerge extends ConfigGroup
     public function getWithMerge($key, $group, $prefix = '', $postfix = '.')
     {
         $configKey = "{$prefix}{$group}${postfix}{$key}";
-        $result = [];
-        if ($this->config->has($configKey)) {
-            $result = $this->config->get($configKey);
-        } elseif ($this->config->hasDefault($configKey)) {
-            $result = $this->config->getDefault($configKey);
-        }
+        $result = $this->config->get($configKey, []);
         if (!is_array($result)) {
             throw new \UnexpectedValueException($configKey . ' must be a list of settings to apply.');
         }
