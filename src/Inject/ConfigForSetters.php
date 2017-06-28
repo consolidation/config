@@ -1,5 +1,7 @@
 <?php
-namespace Consolidation\Config\Util;
+namespace Consolidation\Config\Inject;
+
+use Consolidation\Config\Util\ConfigMerge;
 
 /**
  * Given an object that contains configuration methods, inject any
@@ -9,7 +11,7 @@ namespace Consolidation\Config\Util;
  * provided object. Using configuration to call methods that do work
  * is an abuse of this mechanism.
  */
-class ApplyConfig
+class ConfigForSetters
 {
     protected $config;
 

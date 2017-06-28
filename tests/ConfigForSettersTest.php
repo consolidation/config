@@ -1,10 +1,10 @@
 <?php
-namespace Consolidation\Config\Util;
+namespace Consolidation\Config\Inject;
 
 use Consolidation\Config\Config;
 use Consolidation\TestUtils\ApplyConfigTestTarget;
 
-class ApplyConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigForSettersTest extends \PHPUnit_Framework_TestCase
 {
     public function testApplyConfig()
     {
@@ -30,7 +30,7 @@ class ApplyConfigTest extends \PHPUnit_Framework_TestCase
         ];
         $config = new Config($data);
 
-        $applicator = new ApplyConfig($config, 'Operations.Frobulate', 'task.');
+        $applicator = new ConfigForSetters($config, 'Operations.Frobulate', 'task.');
 
         $testTarget = new ApplyConfigTestTarget();
 
@@ -64,7 +64,7 @@ class ApplyConfigTest extends \PHPUnit_Framework_TestCase
         ];
         $config = new Config($data);
 
-        $applicator = new ApplyConfig($config, 'Operations.Frobulate', 'task.');
+        $applicator = new ConfigForSetters($config, 'Operations.Frobulate', 'task.');
 
         $testTarget = new ApplyConfigTestTarget();
 

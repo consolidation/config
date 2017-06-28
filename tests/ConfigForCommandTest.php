@@ -1,5 +1,5 @@
 <?php
-namespace Consolidation\Config\Command;
+namespace Consolidation\Config\Inject;
 
 use Consolidation\Config\Config;
 use Consolidation\TestUtils\MyFooCommand;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InjectConfigForCommandTest extends \PHPUnit_Framework_TestCase
+class ConfigForCommandTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
 
@@ -78,7 +78,7 @@ EOT;
 
     protected function runCommandViaApplication($command, $input)
     {
-        $configInjector = new InjectConfigForCommand($this->config);
+        $configInjector = new ConfigForCommand($this->config);
 
         $output = new BufferedOutput();
         $application = new Application('TestApplication', '0.0.0');

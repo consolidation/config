@@ -1,5 +1,5 @@
 <?php
-namespace Consolidation\Config\Command;
+namespace Consolidation\Config\Inject;
 
 use Consolidation\Config\ConfigInterface;
 use Consolidation\Config\Util\ConfigFallback;
@@ -8,7 +8,7 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class InjectConfigForCommand implements EventSubscriberInterface
+class ConfigForCommand implements EventSubscriberInterface
 {
     protected $config;
 

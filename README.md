@@ -119,7 +119,7 @@ Then you can fetch the value of the configuration option `c` via:
 ```
 $value = $config->get('a.b.c');
 ```
-[dflydev/dot-access-data](https://github.com/dflydev/dot-access-data) is levereaged to provide this capability.
+[dflydev/dot-access-data](https://github.com/dflydev/dot-access-data) is leveraged to provide this capability.
 
 ## External Examples
 
