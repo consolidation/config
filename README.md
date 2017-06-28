@@ -100,7 +100,7 @@ $config->import($processor->export());
 
 The command option configuration feature described above in the section `Providing Command Options` is provided via a configuration injection class. All that you need to do to use this feature as attach this object to your Symfony Console application's event dispatcher:
 ```
-$configInjector = new \Consolidation\Config\Command\InjectConfigForCommand($config);
+$configInjector = new \Consolidation\Config\Inject\ConfigForCommand($config);
 $application = new Symfony\Component\Console\Application($name, $version);
 
 $eventDispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
@@ -131,10 +131,10 @@ If these features are needed, the results from `Symfony\Component\Config\Definit
 
 ### Use Configuration to Call Setter Methods
 
-[Robo](https://robo.li) provides a facility for configuration files to [define default values for task setter methods](http://robo.li/getting-started/#configuration-for-task-settings). This is done via the `ApplyConfig::apply()` method.
+[Robo](https://robo.li) provides a facility for configuration files to [define default values for task setter methods](http://robo.li/getting-started/#configuration-for-task-settings). This is done via the `ConfigForSetters::apply()` method.
 ```
 $taskClass = static::configClassIdentifier($taskClass);
-$configurationApplier = new \Consolidation\Config\Util\ApplyConfig($this->getConfig(), $taskClass, 'task.');
+$configurationApplier = new \Consolidation\Config\Inject\ConfigForSetters($this->getConfig(), $taskClass, 'task.');
 $configurationApplier->apply($task, 'settings');
 ```
 The `configClassIdentifier` method converts `\`-separated class and namespace names into `.`-separated identifiers; it is provided by ConfigAwareTrait:
