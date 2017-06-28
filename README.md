@@ -18,7 +18,7 @@ Symfony Console is used to provide the framework for the commandline tool, and t
 
 ## Component Status
 
-Under development.
+Factored out of Robo. Candidate for 1.0.0-stable.
 
 ## Motivation
 
