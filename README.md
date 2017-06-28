@@ -80,7 +80,9 @@ command:
 
 The easiest way to utilize the capabilities of this project is to use [Robo as a framework](https://robo.li/framework) to create your commandline tools. Using Robo is optional, though, as this project will work with any Symfony Console application.
 
-### Load Configuration Files
+### Load Configuration Files with Provided Loader
+
+Consolidation/config includes a built-in yaml loader / processor. To use it directly, use a YamlConfigLoader to load each of your configuration files, and a ConfigProcessor to merge them together. Then, export the result from the configuration processor, and import it into a Config object.
 ```
 use Consolidation\Config\Config;
 use Consolidation\Config\YamlConfigLoader;
@@ -96,9 +98,10 @@ $config->import($processor->export());
 
 ### Set Up Command Option Configuration Injection
 
+The command option configuration feature described above in the section `Providing Command Options` is provided via a configuration injection class. All that you need to do to use this feature as attach this object to your Symfony Console application's event dispatcher:
 ```
-$configInjector = new InjectConfigForCommand($config);
-$application = new Application($name, $version);
+$configInjector = new \Consolidation\Config\Command\InjectConfigForCommand($config);
+$application = new Symfony\Component\Console\Application($name, $version);
 
 $eventDispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 $eventDispatcher->addSubscriber($configInjector);
@@ -118,8 +121,35 @@ $value = $config->get('a.b.c');
 ```
 [dflydev/dot-access-data](https://github.com/dflydev/dot-access-data) is levereaged to provide this capability.
 
+## External Examples
+
+### Load Configuration Files with Symfony/Config
+
+The [Symfony Config](http://symfony.com/doc/current/components/config.html) component provides the capability to locate configuration file, load them from either YAML or XML sources, and validate that they match a certain defined schema. Classes to find configuration files are also available.
+
+If these features are needed, the results from `Symfony\Component\Config\Definition\Processor::processConfiguration()` may be provided directly to the `Consolidation\Config\Config::import()` method.
+
+### Use Configuration to Call Setter Methods
+
+[Robo](https://robo.li) provides a facility for configuration files to [define default values for task setter methods](http://robo.li/getting-started/#configuration-for-task-settings). This is done via the `ApplyConfig::apply()` method.
+```
+$taskClass = static::configClassIdentifier($taskClass);
+$configurationApplier = new \Consolidation\Config\Util\ApplyConfig($this->getConfig(), $taskClass, 'task.');
+$configurationApplier->apply($task, 'settings');
+```
+The `configClassIdentifier` method converts `\`-separated class and namespace names into `.`-separated identifiers; it is provided by ConfigAwareTrait:
+```
+protected static function configClassIdentifier($classname)
+{
+    $configIdentifier = strtr($classname, '\\', '.');
+    $configIdentifier = preg_replace('#^(.*\.Task\.|\.)#', '', $configIdentifier);
+
+    return $configIdentifier;
+}
+```
+A similar pattern may be used in other applications that may wish to inject values into objects using their setter methods.
+
 ## Comparison to Existing Solutions
 
 Drush has an existing procedural mechanism for loading configuration values from multiple files, and overlaying the results in priority order.  Command-specific options from configuration files and site aliases may also be applied.
 
-The [Symfony Configuration](http://symfony.com/doc/current/components/config.html) component provides the capability to locate configuration file, load them from either YAML or XML sources, and validate that they match a certain defined schema. 
