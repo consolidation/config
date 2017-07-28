@@ -22,7 +22,6 @@ class ConfigForCommand implements EventSubscriberInterface
     public function setApplication(Application $application)
     {
         $this->application = $application;
-
     }
 
     /**
