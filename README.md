@@ -100,9 +100,8 @@ $config->import($processor->export());
 
 The command option configuration feature described above in the section `Providing Command Options` is provided via a configuration injection class. All that you need to do to use this feature as attach this object to your Symfony Console application's event dispatcher:
 ```
-$application = new Symfony\Component\Console\Application($name, $version);
 $configInjector = new \Consolidation\Config\Inject\ConfigForCommand($config);
-$configInjector->setApplication($application);
+$application = new Symfony\Component\Console\Application($name, $version);
 
 $eventDispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 $eventDispatcher->addSubscriber($configInjector);

@@ -76,29 +76,12 @@ EOT;
         $this->assertEquals($expectedOutput, $output);
     }
 
-    public function testHelpDefaultInjection()
-    {
-        $command = new MyFooCommand();
-        $input = new StringInput('help my:foo');
-
-        list($status, $output) = $this->runCommandViaApplication($command, $input);
-
-        $expectedOutput = <<< EOT
-What is the name of the thing we are naming [default: "baz"]
-EOT;
-
-        $this->assertEquals(0, $status);
-        $this->assertContains($expectedOutput, $output);
-
-    }
-
     protected function runCommandViaApplication($command, $input)
     {
-        $application = new Application('TestApplication', '0.0.0');
-        $output = new BufferedOutput();
-
         $configInjector = new ConfigForCommand($this->config);
-        $configInjector->setApplication($application);
+
+        $output = new BufferedOutput();
+        $application = new Application('TestApplication', '0.0.0');
 
         $eventDispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
         $eventDispatcher->addSubscriber($configInjector);
