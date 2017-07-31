@@ -32,6 +32,8 @@ class ConfigOverlay implements ConfigInterface
         unset($this->contexts[$name]);
         $this->contexts[$name] = $config;
         $this->contexts['process'] = $process;
+
+        return $this;
     }
 
     public function hasContext($name)
@@ -85,7 +87,8 @@ class ConfigOverlay implements ConfigInterface
      */
     public function set($key, $value)
     {
-        return $this->contexts['process']->set($key, $value);
+        $this->contexts['process']->set($key, $value);
+        return $this;
     }
 
     /**
@@ -129,6 +132,7 @@ class ConfigOverlay implements ConfigInterface
      */
     public function setDefault($key, $value)
     {
-        return $this->contexts['default']->set($key, $value);
+        $this->contexts['default']->set($key, $value);
+        return $this;
     }
 }
