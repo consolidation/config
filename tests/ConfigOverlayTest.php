@@ -111,4 +111,17 @@ class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
         // of the alias value.
         $this->assertEquals('config-file hidden-by-a', $this->overlay->get('hidden-by-a'));
     }
+
+    public function testDoesNotHave()
+    {
+        $context = $this->overlay->getContext('no-such-context');
+        $data = $context->export();
+        $this->assertEquals('[]', json_encode($data));
+
+        $this->assertTrue(!$this->overlay->has('no-such-key'));
+        $this->assertTrue(!$this->overlay->hasDefault('no-such-default'));
+
+        $this->assertEquals('no-such-value', $this->overlay->get('no-such-key', 'no-such-value'));
+
+    }
 }
