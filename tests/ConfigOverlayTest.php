@@ -95,13 +95,24 @@ class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
         $data = $this->overlay->import(['a' => 'value']);
     }
 
-    public function testChangePriority()
+    public function testMaintainPriority()
     {
-        // Get and re-add the 'cf' context. Now, it should have a higher
-        // priority than the 'alias' context, but should still have a lower
-        // priority than the 'process' context.
+        // Get and re-add the 'cf' context. Its priority should not change.
         $configFileContext = $this->overlay->getContext('cf');
         $this->overlay->addContext('cf', $configFileContext);
+
+        // These asserts are the same as in testGetPriority
+        $this->assertEquals('process-h', $this->overlay->get('hidden-by-process'));
+        $this->assertEquals('config-file hidden-by-cf', $this->overlay->get('hidden-by-cf'));
+        $this->assertEquals('alias hidden-by-a', $this->overlay->get('hidden-by-a'));
+    }
+
+    public function testChangePriority()
+    {
+        // Increase the priority of the 'cf' context. Now, it should have a higher
+        // priority than the 'alias' context, but should still have a lower
+        // priority than the 'process' context.
+        $this->overlay->increasePriority('cf');
 
         // These asserts are the same as in testGetPriority
         $this->assertEquals('process-h', $this->overlay->get('hidden-by-process'));
@@ -110,6 +121,35 @@ class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
         // This one has changed: the config-file value is now found instead
         // of the alias value.
         $this->assertEquals('config-file hidden-by-a', $this->overlay->get('hidden-by-a'));
+    }
+
+    public function testPlaceholder()
+    {
+        $this->overlay->addPlaceholder('lower');
+
+        $higherContext = new Config();
+        $higherContext->import(['priority-test' => 'higher']);
+
+        $lowerContext = new Config();
+        $lowerContext->import(['priority-test' => 'lower']);
+
+        // Usually 'lower' would have the highest priority, since it is
+        // added last. However, our earlier call to 'addPlaceholder' reserves
+        // a spot for it, so the 'higher' context will end up with a higher
+        // priority.
+        $this->overlay->addContext('higher', $higherContext);
+        $this->overlay->addContext('lower', $lowerContext);
+        $this->assertEquals('higher', $this->overlay->get('priority-test', 'neither'));
+
+        // Test to see that we can change the value of the 'higher' context,
+        // and the change will be reflected in the overlay.
+        $higherContext->set('priority-test', 'changed');
+        $this->assertEquals('changed', $this->overlay->get('priority-test', 'neither'));
+
+        // Test to see that the 'process' context still has the highest priority.
+        $this->overlay->set('priority-test', 'process');
+        $higherContext->set('priority-test', 'ignored');
+        $this->assertEquals('process', $this->overlay->get('priority-test', 'neither'));
     }
 
     public function testDoesNotHave()

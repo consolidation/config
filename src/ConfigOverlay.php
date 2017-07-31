@@ -13,10 +13,13 @@ class ConfigOverlay implements ConfigInterface
 {
     protected $contexts = [];
 
+    const DEFAULT_CONTEXT = 'default';
+    const PROCESS_CONTEXT = 'process';
+
     public function __construct()
     {
-        $this->contexts['default'] = new Config();
-        $this->contexts['process'] = new Config();
+        $this->contexts[self::DEFAULT_CONTEXT] = new Config();
+        $this->contexts[self::PROCESS_CONTEXT] = new Config();
     }
 
     /**
@@ -24,16 +27,46 @@ class ConfigOverlay implements ConfigInterface
      * Configuration objects added LAST have HIGHEST priority, with the
      * exception of the fact that the process context always has the
      * highest priority.
+     *
+     * If a context has already been added, its priority will not change.
      */
     public function addContext($name, ConfigInterface $config)
     {
-        $process = $this->contexts['process'];
-        unset($this->contexts['process']);
-        unset($this->contexts[$name]);
+        $process = $this->contexts[self::PROCESS_CONTEXT];
+        unset($this->contexts[self::PROCESS_CONTEXT]);
         $this->contexts[$name] = $config;
-        $this->contexts['process'] = $process;
+        $this->contexts[self::PROCESS_CONTEXT] = $process;
 
         return $this;
+    }
+
+    /**
+     * Add a placeholder context that will be prioritized higher than
+     * existing contexts. This is done to ensure that contexts added
+     * later will maintain a higher priority if the placeholder context
+     * is later relaced with a different configuration set via addContext().
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function addPlaceholder($name)
+    {
+        return $this->addContext($name, new Config());
+    }
+
+    /**
+     * Increase the priority of the named context such that it is higher
+     * in priority than any existing context except for the 'process'
+     * context.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function increasePriority($name)
+    {
+        $config = $this->getContext($name);
+        unset($this->contexts[$name]);
+        return $this->addContext($name, $config);
     }
 
     public function hasContext($name)
@@ -87,7 +120,7 @@ class ConfigOverlay implements ConfigInterface
      */
     public function set($key, $value)
     {
-        $this->contexts['process']->set($key, $value);
+        $this->contexts[self::PROCESS_CONTEXT]->set($key, $value);
         return $this;
     }
 
@@ -116,7 +149,7 @@ class ConfigOverlay implements ConfigInterface
      */
     public function hasDefault($key)
     {
-        return $this->contexts['default']->has($key);
+        return $this->contexts[self::DEFAULT_CONTEXT]->has($key);
     }
 
     /**
@@ -124,7 +157,7 @@ class ConfigOverlay implements ConfigInterface
      */
     public function getDefault($key, $default = null)
     {
-        return $this->contexts['default']->get($key, $default);
+        return $this->contexts[self::DEFAULT_CONTEXT]->get($key, $default);
     }
 
     /**
@@ -132,7 +165,7 @@ class ConfigOverlay implements ConfigInterface
      */
     public function setDefault($key, $value)
     {
-        $this->contexts['default']->set($key, $value);
+        $this->contexts[self::DEFAULT_CONTEXT]->set($key, $value);
         return $this;
     }
 }
