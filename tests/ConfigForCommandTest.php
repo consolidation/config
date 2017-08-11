@@ -5,6 +5,7 @@ use Consolidation\Config\Config;
 use Consolidation\TestUtils\MyFooCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\StringInput;
@@ -18,6 +19,10 @@ class ConfigForCommandTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $data = [
+            // Global options
+            'options' => [
+                'global' => 'from-config',
+            ],
             // Define some configuration settings for the options for
             // the commands my:foo and my:bar.
             'command' => [
@@ -90,11 +95,21 @@ EOT;
         $this->assertEquals(0, $status);
         $this->assertContains($expectedOutput, $output);
 
+        $expectedOutput = <<< EOT
+A certain global option. [default: "from-config"]
+EOT;
+
+        $this->assertContains($expectedOutput, $output);
     }
 
     protected function runCommandViaApplication($command, $input)
     {
         $application = new Application('TestApplication', '0.0.0');
+        $application->getDefinition()
+            ->addOption(
+                new InputOption('--global', null, InputOption::VALUE_REQUIRED, 'A certain global option.', 'hardcoded')
+            );
+
         $output = new BufferedOutput();
 
         $configInjector = new ConfigForCommand($this->config);

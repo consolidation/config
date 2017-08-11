@@ -42,6 +42,7 @@ class ConfigForCommand implements EventSubscriberInterface
     public function injectConfiguration(ConsoleCommandEvent $event)
     {
         $command = $event->getCommand();
+        $this->injectConfigurationForGlobalOptions();
         $this->injectConfigurationForCommand($command);
 
         $targetOfHelpCommand = $this->getHelpCommandTarget($command, $event->getInput());
@@ -50,13 +51,34 @@ class ConfigForCommand implements EventSubscriberInterface
         }
     }
 
+    protected function injectConfigurationForGlobalOptions()
+    {
+        if (!$this->application) {
+            return;
+        }
+
+        $configGroup = new ConfigFallback($this->config, 'options');
+
+        $definition = $this->application->getDefinition();
+        $options = $definition->getOptions();
+
+        return $this->injectConfigGroupIntoOptions($configGroup, $options);
+    }
+
     protected function injectConfigurationForCommand($command)
     {
         $commandName = $command->getName();
         $commandName = str_replace(':', '.', $commandName);
+        $configGroup = new ConfigFallback($this->config, $commandName, 'command.', '.options.');
+
         $definition = $command->getDefinition();
         $options = $definition->getOptions();
-        $configGroup = new ConfigFallback($this->config, $commandName, 'command.', '.options.');
+
+        return $this->injectConfigGroupIntoOptions($configGroup, $options);
+    }
+
+    protected function injectConfigGroupIntoOptions($configGroup, $options)
+    {
         foreach ($options as $option => $inputOption) {
             $key = str_replace('.', '-', $option);
             $value = $configGroup->get($key);
