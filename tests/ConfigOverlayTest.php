@@ -1,6 +1,7 @@
 <?php
-namespace Consolidation\Config;
+namespace Consolidation\Config\Util;
 
+use Consolidation\Config\Config;
 use Consolidation\Config\Loader\ConfigProcessor;
 use Consolidation\Config\Loader\YamlConfigLoader;
 
