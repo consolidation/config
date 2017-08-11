@@ -82,6 +82,11 @@ class ConfigOverlay implements ConfigInterface
         return new Config();
     }
 
+    public function removeContext($name)
+    {
+        unset($this->contexts[$name]);
+    }
+
     /**
      * Determine if a non-default config value exists.
      */

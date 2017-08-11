@@ -122,6 +122,39 @@ $value = $config->get('a.b.c');
 ```
 [dflydev/dot-access-data](https://github.com/dflydev/dot-access-data) is leveraged to provide this capability.
 
+### Configuration Overlays
+
+Optionally, you may use the ConfigOverlay class to combine multiple configuration objects implamenting ConfigInterface into a single, prioritized configuration object. It is not necessary to use a configuration overlay; if your only goal is to merge configuration from multiple files, you may follow the example above to extend a processor with multiple configuration files, and then import the result into a single configuration object. This will cause newer configuration items to overwrite any existing values stored under the same key.
+
+A configuration overlay can achieve the same end result without overwriting any config values. The advantage of doing this is that different configuration overlays could be used to create separate "views" on different collections of configuration. A configuration overlay is also useful if you wish to temporarily override some configuration values, and then put things back the way they were by removing the overlay.
+```
+use Consolidation\Config\Config;
+use Consolidation\Config\ConfigOverlay;
+use Consolidation\Config\YamlConfigLoader;
+use Consolidation\Config\ConfigProcessor;
+
+$config1 = new Config();
+$config2 = new Config();
+$loader = new YamlConfigLoader();
+$processor = new ConfigProcessor();
+$processor->extend($loader->load('c1.yml'));
+$config1->import($processor->export());
+$processor = new ConfigProcessor();
+$processor->extend($loader->load('c2.yml'));
+$config2->import($processor->export());
+
+$configOverlay = (new ConfigOverlay())
+    ->addContext('one', $config1)
+    ->addContext('two', $config2);
+
+$value = $configOverlay->get('key');
+
+$configOverlay->removeContext('two');
+
+$value = $configOverlay->get('key');
+```
+The first call to `$configOverlay->get('key')`, above, will return the value from `key` in `$config2`, if it exists, or from `$config1` otherwise. The second call to the same function, after `$config2` is removed, will only consider configuration values stored in `$config1`.
+
 ## External Examples
 
 ### Load Configuration Files with Symfony/Config
