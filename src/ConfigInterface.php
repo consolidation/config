@@ -12,11 +12,14 @@ interface ConfigInterface
      * Fetch a configuration value
      *
      * @param string $key Which config item to look up
-     * @param string|null $defaultOverride Override usual default value with a different default. Deprecated; provide defaults to the config processor instead.
+     * @param string|null $defaultFallback Fallback default value to use when
+     *   configuration object has neither a value nor a default. Use is
+     *   discouraged; use default context in ConfigOverlay, or provide defaults
+     *   using a config processor.
      *
      * @return mixed
      */
-    public function get($key, $defaultOverride = null);
+    public function get($key, $defaultFallback = null);
 
     /**
      * Set a config value
@@ -55,11 +58,11 @@ interface ConfigInterface
      * Return the default value for a given configuration item.
      *
      * @param string $key
-     * @param mixed $defaultOverride
+     * @param mixed $defaultFallback
      *
      * @return mixed
      */
-    public function getDefault($key, $defaultOverride = null);
+    public function getDefault($key, $defaultFallback = null);
 
     /**
      * Set the default value for a configuration setting. This allows us to
