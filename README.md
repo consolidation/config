@@ -129,9 +129,9 @@ Optionally, you may use the ConfigOverlay class to combine multiple configuratio
 A configuration overlay can achieve the same end result without overwriting any config values. The advantage of doing this is that different configuration overlays could be used to create separate "views" on different collections of configuration. A configuration overlay is also useful if you wish to temporarily override some configuration values, and then put things back the way they were by removing the overlay.
 ```
 use Consolidation\Config\Config;
-use Consolidation\Config\ConfigOverlay;
 use Consolidation\Config\YamlConfigLoader;
 use Consolidation\Config\ConfigProcessor;
+use Consolidation\Config\Util\ConfigOverlay;
 
 $config1 = new Config();
 $config2 = new Config();

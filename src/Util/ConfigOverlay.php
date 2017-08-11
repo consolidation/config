@@ -1,5 +1,8 @@
 <?php
-namespace Consolidation\Config;
+namespace Consolidation\Config\Util;
+
+use Consolidation\Config\Config;
+use Consolidation\Config\ConfigInterface;
 
 /**
  * Overlay different configuration objects that implement ConfigInterface
