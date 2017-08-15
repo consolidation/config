@@ -8,6 +8,7 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputOption;
 
 class ConfigForCommand implements EventSubscriberInterface
 {
@@ -42,16 +43,16 @@ class ConfigForCommand implements EventSubscriberInterface
     public function injectConfiguration(ConsoleCommandEvent $event)
     {
         $command = $event->getCommand();
-        $this->injectConfigurationForGlobalOptions();
-        $this->injectConfigurationForCommand($command);
+        $this->injectConfigurationForGlobalOptions($event->getInput());
+        $this->injectConfigurationForCommand($command, $event->getInput());
 
         $targetOfHelpCommand = $this->getHelpCommandTarget($command, $event->getInput());
         if ($targetOfHelpCommand) {
-            $this->injectConfigurationForCommand($targetOfHelpCommand);
+            $this->injectConfigurationForCommand($targetOfHelpCommand, $event->getInput());
         }
     }
 
-    protected function injectConfigurationForGlobalOptions()
+    protected function injectConfigurationForGlobalOptions($input)
     {
         if (!$this->application) {
             return;
@@ -62,10 +63,10 @@ class ConfigForCommand implements EventSubscriberInterface
         $definition = $this->application->getDefinition();
         $options = $definition->getOptions();
 
-        return $this->injectConfigGroupIntoOptions($configGroup, $options);
+        return $this->injectConfigGroupIntoOptions($configGroup, $options, $input);
     }
 
-    protected function injectConfigurationForCommand($command)
+    protected function injectConfigurationForCommand($command, $input)
     {
         $commandName = $command->getName();
         $commandName = str_replace(':', '.', $commandName);
@@ -74,16 +75,24 @@ class ConfigForCommand implements EventSubscriberInterface
         $definition = $command->getDefinition();
         $options = $definition->getOptions();
 
-        return $this->injectConfigGroupIntoOptions($configGroup, $options);
+        return $this->injectConfigGroupIntoOptions($configGroup, $options, $input);
     }
 
-    protected function injectConfigGroupIntoOptions($configGroup, $options)
+    protected function injectConfigGroupIntoOptions($configGroup, $options, $input)
     {
         foreach ($options as $option => $inputOption) {
             $key = str_replace('.', '-', $option);
             $value = $configGroup->get($key);
             if ($value !== null) {
-                $inputOption->setDefault($value);
+                // There is no way to test for `InputOption::VALUE_NONE`
+                // We'll check to see if $value == true instead. Users
+                // who put non-boolean values in their boolean configuration
+                // items will cause 'setDefault' to throw an exception.
+                if ($value === true) {
+                    $input->setOption($key, $value);
+                } else {
+                    $inputOption->setDefault($value);
+                }
             }
         }
     }
