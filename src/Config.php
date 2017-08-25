@@ -84,7 +84,6 @@ class Config implements ConfigInterface
         }
         
         // Check to see if $key has a partial match
-        $searchLength = strlen($key);
         foreach ($this->defaults as $defaultKey => $value) {
             if (0 === strpos($defaultKey, $key)) {
                 return true;
