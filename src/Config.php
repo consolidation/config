@@ -78,7 +78,19 @@ class Config implements ConfigInterface
      */
     public function hasDefault($key)
     {
-        return isset($this->defaults[$key]);
+        // Return immediately if exact value is available
+        if (isset($this->defaults[$key])) {
+            return true;
+        }
+        
+        // Check to see if $key has a partial match
+        $searchLength = strlen($key);
+        foreach ($this->defaults as $defaultKey => $value) {
+            if (0 === strpos($defaultKey, $key)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -86,7 +98,29 @@ class Config implements ConfigInterface
      */
     public function getDefault($key, $defaultFallback = null)
     {
-        return $this->hasDefault($key) ? $this->defaults[$key] : $defaultFallback;
+        // Return fallback if no default exists
+        if (!$this->hasDefault($key)) {
+            return $defaultFallback;
+        }
+
+        // Return the exact value if available
+        if (isset($this->defaults[$key])) {
+            return $this->defaults[$key];
+        }
+
+        // Create an array with all available values
+        $defaults = [];
+        $length = strlen($key);
+        foreach ($this->defaults as $defaultKey => $value) {
+            if (0 === strpos($defaultKey, $key)) {
+                $partialKey = substr($defaultKey, $length);
+                if (0 === strpos($partialKey, '.')) {
+                    $partialKey = substr($partialKey, 1);
+                }
+                $defaults[$partialKey] = $value;
+            }
+        }
+        return $defaults;
     }
 
     /**
