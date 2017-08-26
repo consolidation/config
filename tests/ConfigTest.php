@@ -27,12 +27,17 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $config->setDefault('c', 'other');
         $config->setDefault('d', 'other');
+        $config->setDefault('foo.bar', 'baz');
 
         $this->assertEquals('foo', $config->get('a'));
         $this->assertEquals('boz', $config->get('c'));
         $this->assertEquals('other', $config->get('d'));
         $this->assertEquals('other', $config->getDefault('c'));
         $this->assertEquals('', $config->get('e'));
+        $this->assertEquals('baz', $config->get('foo.bar'));
+        $foo = $config->get('foo');
+        $this->assertArrayHasKey('bar', $foo);
+        $this->assertEquals('baz', $foo['bar']);
     }
 
     public function testConfigurationWithCrossFileReferences()
