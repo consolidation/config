@@ -41,7 +41,8 @@ class EnvConfig implements ConfigInterface
      */
     public function get($key, $defaultFallback = null)
     {
-        $envKey = strtoupper(strtr($key, '.-', '__'));
+        $envKey = $this->prefix . strtoupper(strtr($key, '.-', '__'));
+        $envKey = str_replace($this->prefix . $this->prefix, $this->prefix, $envKey);
         return getenv($envKey) ?: $defaultFallback;
     }
 
