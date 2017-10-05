@@ -66,7 +66,7 @@ class EnvConfig implements ConfigInterface
      */
     public function export()
     {
-        // no-op?
+        return [];
     }
 
     /**
