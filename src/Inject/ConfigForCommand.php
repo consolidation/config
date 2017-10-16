@@ -88,7 +88,7 @@ class ConfigForCommand implements EventSubscriberInterface
                 // We'll check to see if $value == true instead. Users
                 // who put non-boolean values in their boolean configuration
                 // items will cause 'setDefault' to throw an exception.
-                if (is_bool($value)) {
+                if (is_bool($value) && ($value == true)) {
                     $input->setOption($key, $value);
                 } else {
                     $inputOption->setDefault($value);
