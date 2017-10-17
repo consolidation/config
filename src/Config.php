@@ -58,6 +58,14 @@ class Config implements ConfigInterface
      */
     public function import($data)
     {
+        return $this->replace($data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function replace($data)
+    {
         $this->config = new Data($data);
         return $this;
     }

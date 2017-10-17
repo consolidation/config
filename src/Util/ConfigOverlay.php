@@ -137,7 +137,15 @@ class ConfigOverlay implements ConfigInterface
      */
     public function import($data)
     {
-        throw new \Exception('The method "import" is not supported for the ConfigOverlay class.');
+        $this->unsupported(__FUNCTION__);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function replace($data)
+    {
+        $this->unsupported(__FUNCTION__);
     }
 
     /**
@@ -145,7 +153,15 @@ class ConfigOverlay implements ConfigInterface
      */
     public function combine($data)
     {
-        throw new \Exception('The method "combine" is not supported for the ConfigOverlay class.');
+        $this->unsupported(__FUNCTION__);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function unsupported($fn)
+    {
+        throw new \Exception("The method '$fn' is not supported for the ConfigOverlay class.");
     }
 
     /**
