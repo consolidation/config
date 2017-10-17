@@ -41,6 +41,18 @@ interface ConfigInterface
     public function import($data);
 
     /**
+     * Import configuration from the provided nexted array, merging with whatever
+     * was here previously. No processing is done on the provided data.
+     *
+     * TODO: This will become a required method in version 2.0. Adding now
+     * would break clients that implement ConfigInterface.
+     *
+     * @param array $data
+     * @return Config
+     */
+    // public function combine($data);
+
+    /**
      * Export all configuration as a nested array.
      */
     public function export();

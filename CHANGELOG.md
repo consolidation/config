@@ -1,7 +1,8 @@
 # Changelog
 
-### 1.0.5 10/17/2017
+### 1.0.6 10/17/2017
 
+* Add a 'Config::combine()' method for importing without overwriting.
 * Factor out ArrayUtil as a reusable utility class.
 
 ### 1.0.4 10/16/2017

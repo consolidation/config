@@ -143,6 +143,14 @@ class ConfigOverlay implements ConfigInterface
     /**
      * @inheritdoc
      */
+    public function combine($data)
+    {
+        throw new \Exception('The method "combine" is not supported for the ConfigOverlay class.');
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function export()
     {
         $export = [];
