@@ -15,6 +15,21 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('{"foo":"bar"}', json_encode($data));
     }
 
+    public function testCombine()
+    {
+        // Pointless tests just to ensure everything is covered.
+        $config = new Config();
+        $config->set('foo', 'bar');
+        $config->set('baz', 'boz');
+        $config2 = new Config();
+        $config2->set('foo', 'fu');
+        $config2->set('new', 'blue');
+        $config->combine($config2->export());
+        $this->assertEquals('fu', $config->get('foo'));
+        $this->assertEquals('boz', $config->get('baz'));
+        $this->assertEquals('blue', $config->get('new'));
+    }
+
     public function testDefault()
     {
         $data = [
