@@ -84,13 +84,9 @@ class ConfigForCommand implements EventSubscriberInterface
             $key = str_replace('.', '-', $option);
             $value = $configGroup->get($key);
             if ($value !== null) {
-                // There is no way to test for `InputOption::VALUE_NONE`
-                // We'll check to see if $value == true instead. Users
-                // who put non-boolean values in their boolean configuration
-                // items will cause 'setDefault' to throw an exception.
                 if (is_bool($value) && ($value == true)) {
                     $input->setOption($key, $value);
-                } else {
+                } elseif ($inputOption->acceptValue()) {
                     $inputOption->setDefault($value);
                 }
             }
