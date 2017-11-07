@@ -11,7 +11,7 @@ class Config implements ConfigInterface
     protected $config;
 
     /**
-     * @var array
+     * @var Data
      */
     protected $defaults;
 
@@ -22,7 +22,7 @@ class Config implements ConfigInterface
     public function __construct(array $data = null)
     {
         $this->config = new Data($data);
-        $this->defaults = [];
+        $this->defaults = new Data();
     }
 
     /**
@@ -94,7 +94,7 @@ class Config implements ConfigInterface
      */
     public function hasDefault($key)
     {
-        return isset($this->defaults[$key]);
+        return $this->defaults->has($key);
     }
 
     /**
@@ -102,7 +102,7 @@ class Config implements ConfigInterface
      */
     public function getDefault($key, $defaultFallback = null)
     {
-        return $this->hasDefault($key) ? $this->defaults[$key] : $defaultFallback;
+        return $this->hasDefault($key) ? $this->defaults->get($key) : $defaultFallback;
     }
 
     /**
@@ -110,7 +110,7 @@ class Config implements ConfigInterface
      */
     public function setDefault($key, $value)
     {
-        $this->defaults[$key] = $value;
+        $this->defaults->set($key, $value);
         return $this;
     }
 }
