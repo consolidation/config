@@ -11,6 +11,9 @@ class Config implements ConfigInterface
     protected $config;
 
     /**
+     * TODO: make this private in 2.0 to prevent being saved as an array
+     *   Making private now breaks backward compatibility
+     *
      * @var Data
      */
     protected $defaults;
@@ -22,7 +25,7 @@ class Config implements ConfigInterface
     public function __construct(array $data = null)
     {
         $this->config = new Data($data);
-        $this->defaults = new Data();
+        $this->setDefaults(new Data());
     }
 
     /**
@@ -94,7 +97,7 @@ class Config implements ConfigInterface
      */
     public function hasDefault($key)
     {
-        return $this->defaults->has($key);
+        return $this->getDefaults()->has($key);
     }
 
     /**
@@ -102,7 +105,7 @@ class Config implements ConfigInterface
      */
     public function getDefault($key, $defaultFallback = null)
     {
-        return $this->hasDefault($key) ? $this->defaults->get($key) : $defaultFallback;
+        return $this->hasDefault($key) ? $this->getDefaults()->get($key) : $defaultFallback;
     }
 
     /**
@@ -110,7 +113,41 @@ class Config implements ConfigInterface
      */
     public function setDefault($key, $value)
     {
-        $this->defaults->set($key, $value);
+        $this->getDefaults()->set($key, $value);
         return $this;
+    }
+
+    /**
+     * Return the class $defaults property and ensure it's a Data object
+     * TODO: remove Data object validation in 2.0
+     *
+     * @return Data
+     */
+    public function getDefaults()
+    {
+        // Ensure $this->defaults is a Data object (not an array)
+        if (is_array($this->defaults)) {
+            $this->setDefaults($this->defaults);
+        }
+        return $this->defaults;
+    }
+
+    /**
+     * Sets the $defaults class parameter
+     * TODO: remove support for array in 2.0 as this would currently break backward compatibility
+     *
+     * @param Data|array $defaults
+     *
+     * @throws \Exception
+     */
+    public function setDefaults($defaults)
+    {
+        if (is_array($defaults)) {
+            $this->defaults = new Data($defaults);
+        } elseif ($defaults instanceof Data) {
+            $this->defaults = $defaults;
+        } else {
+            throw new \Exception("Unknown type provided for \$defaults");
+        }
     }
 }
