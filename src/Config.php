@@ -21,6 +21,8 @@ class Config implements ConfigInterface
     /**
      * Create a new configuration object, and initialize it with
      * the provided nested array containing configuration data.
+     *
+     * @param array $data - Config data to store
      */
     public function __construct(array $data = null)
     {
