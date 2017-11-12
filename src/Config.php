@@ -14,7 +14,7 @@ class Config implements ConfigInterface
      * TODO: make this private in 2.0 to prevent being saved as an array
      *   Making private now breaks backward compatibility
      *
-     * @var Data
+     * @var Data $defaults
      */
     protected $defaults;
 
