@@ -123,7 +123,7 @@ class Config implements ConfigInterface
      *
      * @return Data
      */
-    public function getDefaults()
+    protected function getDefaults()
     {
         // Ensure $this->defaults is a Data object (not an array)
         if (is_array($this->defaults)) {
@@ -140,7 +140,7 @@ class Config implements ConfigInterface
      *
      * @throws \Exception
      */
-    public function setDefaults($defaults)
+    protected function setDefaults($defaults)
     {
         if (is_array($defaults)) {
             $this->defaults = new Data($defaults);
