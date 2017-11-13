@@ -14,7 +14,7 @@ class Config implements ConfigInterface
      * TODO: make this private in 2.0 to prevent being saved as an array
      *   Making private now breaks backward compatibility
      *
-     * @var Data $defaults
+     * @var Data
      */
     protected $defaults;
 
@@ -124,14 +124,19 @@ class Config implements ConfigInterface
      * TODO: remove Data object validation in 2.0
      *
      * @return Data
+     * @throws \Exception
      */
     protected function getDefaults()
     {
         // Ensure $this->defaults is a Data object (not an array)
         if (is_array($this->defaults)) {
             $this->setDefaults($this->defaults);
+            return $this->getDefaults();
+        } elseif ($this->defaults instanceof Data) {
+            return $this->defaults;
+        } else {
+            throw new \Exception('$this->defaults is not a DflyDev\DotAccessData\Data object');
         }
-        return $this->defaults;
     }
 
     /**
