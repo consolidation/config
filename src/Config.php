@@ -124,19 +124,14 @@ class Config implements ConfigInterface
      * TODO: remove Data object validation in 2.0
      *
      * @return Data
-     * @throws \Exception
      */
     protected function getDefaults()
     {
         // Ensure $this->defaults is a Data object (not an array)
         if (is_array($this->defaults)) {
             $this->setDefaults($this->defaults);
-            return $this->getDefaults();
         }
-        if ($this->defaults instanceof Data) {
-            return $this->defaults;
-        }
-        throw new \Exception('$this->defaults is not a DflyDev\DotAccessData\Data object');
+        return $this->defaults;
     }
 
     /**
