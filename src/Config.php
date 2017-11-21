@@ -1,10 +1,12 @@
 <?php
+
 namespace Consolidation\Config;
 
 use Dflydev\DotAccessData\Data;
 
 class Config implements ConfigInterface
 {
+
     /**
      * @var Data
      */
@@ -124,6 +126,7 @@ class Config implements ConfigInterface
      * TODO: remove Data object validation in 2.0
      *
      * @return Data
+     * @codeCoverageIgnore
      */
     protected function getDefaults()
     {
@@ -141,6 +144,7 @@ class Config implements ConfigInterface
      * @param Data|array $defaults
      *
      * @throws \Exception
+     * @codeCoverageIgnore
      */
     protected function setDefaults($defaults)
     {
