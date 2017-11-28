@@ -130,7 +130,7 @@ class Config implements ConfigInterface
     protected function getDefaults()
     {
         // Ensure $this->defaults is a Data object (not an array)
-        if (is_array($this->defaults)) {
+        if (!$this->defaults instanceof Data) {
             $this->setDefaults($this->defaults);
         }
         return $this->defaults;
