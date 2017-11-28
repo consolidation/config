@@ -55,6 +55,37 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('{"foo":"bar"}', json_encode($config->get('f')));
     }
 
+    public function testDefaultsArray()
+    {
+        $data = ['a' => 'foo', 'b' => 'bar', 'c' => 'boz',];
+        $defaults = ['d' => 'foo', 'e' => 'bar', 'f' => 'boz',];
+
+        // Create reflection class to test private methods
+        $configClass = new \ReflectionClass("Consolidation\Config\Config");
+
+        // $defaults
+        $defaultsProperty = $configClass->getProperty("defaults");
+        $defaultsProperty->setAccessible(true);
+
+        // $getDefaults
+        $getDefaultsMethod = $configClass->getMethod("getDefaults");
+        $getDefaultsMethod->setAccessible(true);
+
+        // Test the config class
+        $config = new Config($data);
+
+        // Set $config::defaults to an array to test getter and setter
+        $defaultsProperty->setValue($config, $defaults);
+        $this->assertTrue(is_array($defaultsProperty->getValue($config)));
+        $this->assertInstanceOf('Dflydev\DotAccessData\Data',
+            $getDefaultsMethod->invoke($config));
+
+        // Set $config::defaults to a string to test exception
+        $defaultsProperty->setValue($config, "foo.bar");
+        $this->setExpectedException("Exception");
+        $getDefaultsMethod->invoke($config);
+    }
+
     public function testConfigurationWithCrossFileReferences()
     {
         $config = new Config();
