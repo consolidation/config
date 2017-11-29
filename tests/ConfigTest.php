@@ -38,16 +38,52 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'c' => 'boz',
         ];
 
+        $foo = ["foo" => "bar"];
+
         $config = new Config($data);
 
         $config->setDefault('c', 'other');
         $config->setDefault('d', 'other');
+        $config->setDefault('f', $foo);
 
         $this->assertEquals('foo', $config->get('a'));
         $this->assertEquals('boz', $config->get('c'));
         $this->assertEquals('other', $config->get('d'));
         $this->assertEquals('other', $config->getDefault('c'));
         $this->assertEquals('', $config->get('e'));
+        $this->assertEquals('bar', $config->get('f.foo'));
+        $this->assertEquals('{"foo":"bar"}', json_encode($config->get('f')));
+    }
+
+    public function testDefaultsArray()
+    {
+        $data = ['a' => 'foo', 'b' => 'bar', 'c' => 'boz',];
+        $defaults = ['d' => 'foo', 'e' => 'bar', 'f' => 'boz',];
+
+        // Create reflection class to test private methods
+        $configClass = new \ReflectionClass("Consolidation\Config\Config");
+
+        // $defaults
+        $defaultsProperty = $configClass->getProperty("defaults");
+        $defaultsProperty->setAccessible(true);
+
+        // $getDefaults
+        $getDefaultsMethod = $configClass->getMethod("getDefaults");
+        $getDefaultsMethod->setAccessible(true);
+
+        // Test the config class
+        $config = new Config($data);
+
+        // Set $config::defaults to an array to test getter and setter
+        $defaultsProperty->setValue($config, $defaults);
+        $this->assertTrue(is_array($defaultsProperty->getValue($config)));
+        $this->assertInstanceOf('Dflydev\DotAccessData\Data',
+            $getDefaultsMethod->invoke($config));
+
+        // Set $config::defaults to a string to test exception
+        $defaultsProperty->setValue($config, "foo.bar");
+        $this->setExpectedException("Exception");
+        $getDefaultsMethod->invoke($config);
     }
 
     public function testConfigurationWithCrossFileReferences()
