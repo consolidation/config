@@ -21,7 +21,7 @@
     "require": {
         "php": ">=5.4.0",
         "dflydev/dot-access-data": "^1.1.0",
-        "grasmash/yaml-expander": "^1.1"
+        "grasmash/yaml-expander": "^1.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^4",
