@@ -2,8 +2,6 @@
 
 namespace Consolidation\Config\Loader;
 
-use Grasmash\YamlExpander\Expander;
-
 /**
  * Load configuration files.
  */

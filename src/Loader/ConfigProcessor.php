@@ -2,7 +2,7 @@
 
 namespace Consolidation\Config\Loader;
 
-use Grasmash\YamlExpander\Expander;
+use Grasmash\Expander\Expander;
 use Consolidation\Config\Util\ArrayUtil;
 
 /**
@@ -13,6 +13,12 @@ class ConfigProcessor
 {
     protected $processedConfig = [];
     protected $unprocessedConfig = [];
+    protected $expander;
+
+    public function __construct($expander = null)
+    {
+        $this->expander = $expander ?: new Expander();
+    }
 
     /**
      * Extend the configuration to be processed with the
@@ -153,7 +159,7 @@ class ConfigProcessor
      */
     protected function evaluate(array $config, $referenceArray = [])
     {
-        return Expander::expandArrayProperties(
+        return $this->expander->expandArrayProperties(
             $config,
             $referenceArray
         );
