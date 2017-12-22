@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1647dfee0c6a257c8793747e8c9d74f",
+    "content-hash": "55aa0b628b3a57916df6d5a3fcb97d15",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -67,7 +67,7 @@
         },
         {
             "name": "grasmash/expander",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/grasmash/expander.git",
@@ -1954,9 +1954,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "grasmash/expander": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
