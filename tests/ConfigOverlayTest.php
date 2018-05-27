@@ -82,8 +82,16 @@ class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
 
     public function testExport()
     {
+        // Set two different values in two contexts on the same key.
+        // Ensure that the value from only the higher-priority context
+        // shows up in the export.
+        $this->overlay->getContext('cf')->set('duplicate', 'cf-value');
+        $this->overlay->getContext('a')->set('duplicate', 'a-value');
         $data = $this->overlay->export();
 
+        $this->assertEquals('a-value', $data['duplicate']);
+
+        // Also ensure that we have some data from each context in the export.
         $this->assertEquals('config-file-a', $data['options']['cf-a']);
         $this->assertEquals('alias-a', $data['options']['a-a']);
     }
