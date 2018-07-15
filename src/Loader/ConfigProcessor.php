@@ -13,11 +13,22 @@ class ConfigProcessor
 {
     protected $processedConfig = [];
     protected $unprocessedConfig = [];
+    protected $nameOfItemsToMerge = [];
     protected $expander;
 
     public function __construct($expander = null)
     {
         $this->expander = $expander ?: new Expander();
+    }
+
+    public function selectMergeStrategy($itemName)
+    {
+        if (is_array($itemName)) {
+            $this->nameOfItemsToMerge = array_merge($this->nameOfItemsToMerge, $itemName);
+            return $this;
+        }
+        $this->nameOfItemsToMerge[] = $itemName;
+        return $this;
     }
 
     /**
@@ -147,7 +158,7 @@ class ConfigProcessor
      */
     protected function reduceOne(array $processed, array $config)
     {
-        return ArrayUtil::mergeRecursiveDistinct($processed, $config);
+        return ArrayUtil::mergeRecursiveSelect($processed, $config, $this->nameOfItemsToMerge);
     }
 
     /**
