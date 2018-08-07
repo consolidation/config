@@ -21,7 +21,13 @@ class ConfigProcessor
         $this->expander = $expander ?: new Expander();
     }
 
-    public function selectMergeStrategy($itemName)
+    /**
+     * By default, string config items always REPLACE, not MERGE when added
+     * from different sources. This method will allow applications to alter
+     * this behavior for specific items so that strings from multiple sources
+     * will be merged together into an array instead.
+     */
+    public function useMergeStrategyForKeys($itemName)
     {
         if (is_array($itemName)) {
             $this->nameOfItemsToMerge = array_merge($this->nameOfItemsToMerge, $itemName);
