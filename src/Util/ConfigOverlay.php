@@ -117,11 +117,31 @@ class ConfigOverlay implements ConfigInterface
      */
     public function get($key, $default = null)
     {
+        if (is_array($default)) {
+            return $this->getUnion($key);
+        }
+        return $this->getSingle($key, $default);
+    }
+
+    public function getSingle($key, $default = null)
+    {
         $context = $this->findContext($key);
         if ($context) {
             return $context->get($key, $default);
         }
         return $default;
+    }
+
+    public function getUnion($key)
+    {
+        $result = [];
+        foreach (array_reverse($this->contexts) as $name => $config) {
+            $item = (array) $config->get($key, []);
+            if ($item !== null) {
+                $result = array_merge($result, $item);
+            }
+        }
+        return $result;
     }
 
     /**
@@ -173,7 +193,7 @@ class ConfigOverlay implements ConfigInterface
         $export = [];
         foreach ($this->contexts as $name => $config) {
             $exportToMerge = $config->export();
-            $export = ArrayUtil::mergeRecursiveDistinct($export, $exportToMerge);
+            $export = \array_replace_recursive($export, $exportToMerge);
         }
         return $export;
     }

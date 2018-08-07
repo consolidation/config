@@ -31,7 +31,7 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foobarbaz', $data['a']);
     }
 
-    public function processorForConfigMergeTest($provideSourceNames)
+    public function processorForConfigMergeTest($provideSourceNames, $useMergeBehavor = false)
     {
         $config1 = [
             'm' => [
@@ -42,6 +42,10 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
                     't' => 't-1',
                 ],
                 'z' => 'z-1',
+                'list' => [
+                    'one-a',
+                    'one-b',
+                ]
             ],
         ];
         $config2 = [
@@ -52,6 +56,10 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
                     's' => 's-2',
                 ],
                 'z' => 'z-2',
+                'list' => [
+                    'two-a',
+                    'two-b',
+                ]
             ],
         ];
         $config3 = [
@@ -62,11 +70,19 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
                     'u' => 'u-3',
                 ],
                 'z' => 'z-3',
+                'list' => [
+                    'three-a',
+                    'three-b',
+                ]
             ],
         ];
 
         $processor = new ConfigProcessor();
         $testLoader = new TestLoader();
+
+        if ($useMergeBehavor) {
+            $processor->useMergeStrategyForKeys($useMergeBehavor);
+        }
 
         $testLoader->set($config1);
         $testLoader->setSourceName($provideSourceNames ? 'c-1' : '');
@@ -85,9 +101,25 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testConfigProcessorMergeAssociative()
     {
-        $processor = $this->processorForConfigMergeTest(false);
+        $processor = $this->processorForConfigMergeTest(false, false);
         $data = $processor->export();
-        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","list":["three-a","three-b"],"w":"w-2","v":"v-3"}}', json_encode($data));
+    }
+
+    public function testConfigProcessorWithMergeBehavior()
+    {
+        $processor = $this->processorForConfigMergeTest(false, 'm.y');
+        $data = $processor->export();
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":["s-1","s-2"],"t":["t-1","t-3"],"q":"q-2","u":"u-3"},"z":"z-3","list":["three-a","three-b"],"w":"w-2","v":"v-3"}}', json_encode($data));
+
+        $processor = $this->processorForConfigMergeTest(false, 'm.list');
+        $data = $processor->export();
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","list":["one-a","one-b","two-a","two-b","three-a","three-b"],"w":"w-2","v":"v-3"}}', json_encode($data));
+
+        $processor = $this->processorForConfigMergeTest(false, ['m.y', 'm.list']);
+        $data = $processor->export();
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":["s-1","s-2"],"t":["t-1","t-3"],"q":"q-2","u":"u-3"},"z":"z-3","list":["one-a","one-b","two-a","two-b","three-a","three-b"],"w":"w-2","v":"v-3"}}', json_encode($data));
+
     }
 
     public function testConfigProcessorMergeAssociativeWithSourceNames()
@@ -95,7 +127,7 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $processor = $this->processorForConfigMergeTest(true);
         $sources = $processor->sources();
         $data = $processor->export();
-        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","list":["three-a","three-b"],"w":"w-2","v":"v-3"}}', json_encode($data));
         $this->assertEquals('c-1', $sources['m']['x']);
         $this->assertEquals('c-1', $sources['m']['y']['r']);
         $this->assertEquals('c-2', $sources['m']['w']);
