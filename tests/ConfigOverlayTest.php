@@ -83,12 +83,18 @@ class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
     public function testExport()
     {
         // Set two different values in two contexts on the same key.
-        // Ensure that the value from only the higher-priority context
-        // shows up in the export.
         $this->overlay->getContext('cf')->set('duplicate', 'cf-value');
         $this->overlay->getContext('a')->set('duplicate', 'a-value');
-        $data = $this->overlay->export();
 
+        $getDuplicateWithStringDefault = $this->overlay->get('duplicate', 'default');
+        $this->assertEquals('a-value', $getDuplicateWithStringDefault);
+        $getDuplicateWithArrayDefault = $this->overlay->get('duplicate', []);
+        $this->assertEquals('a,cf', implode(',', array_keys($getDuplicateWithArrayDefault)));
+        $this->assertEquals('a-value,cf-value', implode(',', array_values($getDuplicateWithArrayDefault)));
+
+        // Ensure that the value from only the higher-priority context
+        // shows up in the export.
+        $data = $this->overlay->export();
         $this->assertEquals('a-value', $data['duplicate']);
 
         // Also ensure that we have some data from each context in the export.

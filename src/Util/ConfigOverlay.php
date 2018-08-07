@@ -136,8 +136,10 @@ class ConfigOverlay implements ConfigInterface
     {
         $result = [];
         foreach (array_reverse($this->contexts) as $name => $config) {
-            $item = (array) $config->get($key);
-            $result = array_unique(ArrayUtil::mergeRecursiveDistinct($result, $item));
+            $value = $config->get($key);
+            if ($value !== null) {
+                $result[$name] = $value;
+            }
         }
         return $result;
     }
@@ -191,7 +193,7 @@ class ConfigOverlay implements ConfigInterface
         $export = [];
         foreach ($this->contexts as $name => $config) {
             $exportToMerge = $config->export();
-            $export = \array_merge_recursive($export, $exportToMerge);
+            $export = \array_replace_recursive ($export, $exportToMerge);
         }
         return $export;
     }
