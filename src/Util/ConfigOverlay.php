@@ -136,9 +136,9 @@ class ConfigOverlay implements ConfigInterface
     {
         $result = [];
         foreach (array_reverse($this->contexts) as $name => $config) {
-            $value = $config->get($key);
-            if ($value !== null) {
-                $result[$name] = $value;
+            $item = (array) $config->get($key, []);
+            if ($item !== null) {
+                $result = array_unique(array_merge($result, $item));
             }
         }
         return $result;

@@ -24,7 +24,7 @@
         "grasmash/expander": "^1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4",
+        "phpunit/phpunit": "^5",
         "g1a/composer-test-scenarios": "^1",
         "symfony/console": "^2.5|^3|^4",
         "symfony/yaml": "^2.8.11|^3|^4",
@@ -57,7 +57,7 @@
         "scenario": "scenarios/install",
         "post-update-cmd": [
             "create-scenario symfony4 'symfony/console:^4.0'",
-            "create-scenario symfony2 'symfony/console:^2.8' --platform-php '5.4' --no-lockfile"
+            "create-scenario symfony2 'symfony/console:^2.8' 'phpunit/phpunit:^4' --platform-php '5.4' --no-lockfile"
         ]
     },
     "extra": {

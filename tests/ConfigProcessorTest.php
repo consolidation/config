@@ -31,7 +31,7 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foobarbaz', $data['a']);
     }
 
-    public function processorForConfigMergeTest($provideSourceNames)
+    public function processorForConfigMergeTest($provideSourceNames, $useMergeBehavorForZ = false)
     {
         $config1 = [
             'm' => [
@@ -68,6 +68,10 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
         $processor = new ConfigProcessor();
         $testLoader = new TestLoader();
 
+        if ($useMergeBehavorForZ) {
+            $processor->useMergeStrategyForKeys('m.z');
+        }
+
         $testLoader->set($config1);
         $testLoader->setSourceName($provideSourceNames ? 'c-1' : '');
         $processor->extend($testLoader);
@@ -85,7 +89,14 @@ class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testConfigProcessorMergeAssociative()
     {
-        $processor = $this->processorForConfigMergeTest(false);
+        $processor = $this->processorForConfigMergeTest(false, false);
+        $data = $processor->export();
+        $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
+    }
+
+    public function testConfigProcessorWithMergeBehavior()
+    {
+        $processor = $this->processorForConfigMergeTest(false, true);
         $data = $processor->export();
         $this->assertEquals('{"m":{"x":"x-1","y":{"r":"r-1","s":"s-2","t":"t-3","q":"q-2","u":"u-3"},"z":"z-3","w":"w-2","v":"v-3"}}', json_encode($data));
     }
