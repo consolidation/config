@@ -193,7 +193,7 @@ class ConfigOverlay implements ConfigInterface
         $export = [];
         foreach ($this->contexts as $name => $config) {
             $exportToMerge = $config->export();
-            $export = \array_replace_recursive ($export, $exportToMerge);
+            $export = \array_replace_recursive($export, $exportToMerge);
         }
         return $export;
     }
