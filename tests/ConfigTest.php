@@ -3,6 +3,7 @@ namespace Consolidation\Config;
 
 use Consolidation\Config\Loader\ConfigProcessor;
 use Consolidation\Config\Loader\YamlConfigLoader;
+use Consolidation\Config\Util\Interpolator;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -53,6 +54,22 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $config->get('e'));
         $this->assertEquals('bar', $config->get('f.foo'));
         $this->assertEquals('{"foo":"bar"}', json_encode($config->get('f')));
+    }
+
+    public function testInterpolation()
+    {
+        $data = [
+            'a' => [
+                'b' => [
+                    'c' => 'foo',
+                ],
+            ],
+        ];
+        $config = new Config($data);
+
+        $actual = $config->interpolate('This is a {{a.b.c}} bar');
+
+        $this->assertEquals('This is a foo bar', $actual);
     }
 
     public function testDefaultsArray()
