@@ -55,6 +55,46 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('{"foo":"bar"}', json_encode($config->get('f')));
     }
 
+    public function testGetTokens()
+    {
+        $data = [
+            'a' => [
+                'b' => [
+                    'c' => 'foo',
+                ],
+            ],
+        ];
+
+        // Create reflection class to test private methods
+        $configClass = new \ReflectionClass("Consolidation\Config\Config");
+
+        // $findTokens
+        $findTokensMethod = $configClass->getMethod("findTokens");
+        $findTokensMethod->setAccessible(true);
+
+        // Test the config class
+        $config = new Config($data);
+
+        $tokens = $findTokensMethod->invoke($config, 'This is a {{a.b.c}} bar with a {{x.y}}');
+        $this->assertEquals('a.b.c:x.y', implode(':', $tokens));
+    }
+
+    public function testInterpolation()
+    {
+        $data = [
+            'a' => [
+                'b' => [
+                    'c' => 'foo',
+                ],
+            ],
+        ];
+        $config = new Config($data);
+
+        $actual = $config->interpolate('This is a {{a.b.c}} bar');
+
+        $this->assertEquals('This is a foo bar', $actual);
+    }
+
     public function testDefaultsArray()
     {
         $data = ['a' => 'foo', 'b' => 'bar', 'c' => 'boz',];

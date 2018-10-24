@@ -4,6 +4,8 @@ namespace Consolidation\Config\Util;
 use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
 use Consolidation\Config\Util\ArrayUtil;
+use Consolidation\Config\Util\ConfigInterpolatorInterface;
+use Consolidation\Config\Util\ConfigInterpolatorTrait;
 
 /**
  * Overlay different configuration objects that implement ConfigInterface
@@ -13,8 +15,9 @@ use Consolidation\Config\Util\ArrayUtil;
  * individual configuration context. When using overlays, always call
  * getDefault / setDefault on the ConfigOverlay object itself.
  */
-class ConfigOverlay implements ConfigInterface
+class ConfigOverlay implements ConfigInterface, ConfigInterpolatorInterface
 {
+    use ConfigInterpolatorTrait;
     protected $contexts = [];
 
     const DEFAULT_CONTEXT = 'default';
