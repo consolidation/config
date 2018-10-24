@@ -70,7 +70,7 @@ class Interpolator
      * object, given the token keys from the provided message. Keys that
      * do not exist in the configuration are replaced with the default value.
      */
-    protected function replacements($data, $message, $default = '')
+    public function replacements($data, $message, $default = '')
     {
         $tokens = $this->findTokens($message);
 
