@@ -8,14 +8,14 @@
             "email": "greg.1.anderson@greenknowe.org"
         }
     ],
-    "autoload":{
-        "psr-4":{
-            "Consolidation\\Config\\": "src"
+    "autoload": {
+        "psr-4": {
+            "Consolidation\\Config\\": "../../src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Consolidation\\TestUtils\\": "tests/src"
+            "Consolidation\\TestUtils\\": "../../tests/src"
         }
     },
     "require": {
@@ -24,22 +24,22 @@
         "grasmash/expander": "^1"
     },
     "require-dev": {
-        "g1a/composer-test-scenarios": "^1",
-        "phpunit/phpunit": "^4",
-        "satooshi/php-coveralls": "^1.0",
-        "squizlabs/php_codesniffer": "2.*",
-        "symfony/console": "^2.8",
-        "symfony/yaml": "^2.8.11|^3|^4"
+        "symfony/console": "^4.0",
+        "phpunit/phpunit": "^5",
+        "g1a/composer-test-scenarios": "^3",
+        "symfony/yaml": "^2.8.11|^3|^4",
+        "php-coveralls/php-coveralls": "^1",
+        "squizlabs/php_codesniffer": "2.*"
     },
     "suggest": {
         "symfony/yaml": "Required to use Consolidation\\Config\\Loader\\YamlConfigLoader"
     },
     "config": {
+        "platform": {
+            "php": "7.1.3"
+        },
         "optimize-autoloader": true,
         "sort-packages": true,
-        "platform": {
-            "php": "5.4"
-        },
         "vendor-dir": "../../vendor"
     },
     "scripts": {
@@ -54,17 +54,11 @@
             "@lint",
             "@unit",
             "@cs"
-        ],
-        "scenario": "scenarios/install",
-        "post-update-cmd": [
-            "create-scenario symfony4 'symfony/console:^4.0'",
-            "create-scenario symfony2 'symfony/console:^2.8' 'phpunit/phpunit:^4' --platform-php '5.4' --no-lockfile"
         ]
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
         }
-    },
-    "minimum-stability": "stable"
+    }
 }
