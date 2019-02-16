@@ -1,5 +1,17 @@
 # Changelog
 
+### 1.2.0 2019-02-15
+
+* Add ConfigAwareInterface / ConfigAwareTrait
+
+### 1.1.1 2018-10-24
+
+* Add interpolation to Config objects (#23)
+
+### 1.1.0 2018-08-07
+
+* Selective distinct/combine merge strategy. (#22)
+
 ### 1.0.11 2018-05-26
 
 * BUGFIX: Ensure that duplicate keys added to different contexts in a config overlay only appear once in the final export. (#21)
