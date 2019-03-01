@@ -1,5 +1,9 @@
 # Changelog
 
+### Unreleased
+
+* Add ConfigOverlay::exportAll()
+
 ### 1.2.0 2019-02-15
 
 * Add ConfigAwareInterface / ConfigAwareTrait
