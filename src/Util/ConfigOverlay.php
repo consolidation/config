@@ -207,6 +207,22 @@ class ConfigOverlay implements ConfigInterface, ConfigInterpolatorInterface, Con
     }
 
     /**
+     * exportAll returns the export of all contexts, separated into
+     * separate buckets keyed by context name.
+     *
+     * @return array
+     */
+    public function exportAll()
+    {
+        $export = [];
+        foreach ($this->contexts as $name => $config) {
+            $exportToInsert = $config->export();
+            $export[$name] = $exportToInsert;
+        }
+        return $export;
+    }
+
+    /**
      * @inheritdoc
      */
     public function hasDefault($key)

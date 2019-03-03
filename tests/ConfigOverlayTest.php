@@ -109,6 +109,20 @@ class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('alias-a', $data['options']['a-a']);
     }
 
+    public function testExportAll()
+    {
+        $overlay = $this->createOverlay();
+
+        // Set two different values in two contexts on the same key.
+        $overlay->getContext('cf')->set('duplicate', 'cf-value');
+        $overlay->getContext('a')->set('duplicate', 'a-value');
+
+        $export = $overlay->exportAll();
+
+        $this->assertEquals('cf-value', $export['cf']['duplicate']);
+        $this->assertEquals('a-value', $export['a']['duplicate']);
+    }
+
     /**
      * @expectedException Exception
      */
