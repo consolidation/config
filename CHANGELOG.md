@@ -1,7 +1,8 @@
 # Changelog
 
-### Unreleased
+### 1.2.1 2019-03-03
 
+* Add ConfigRuntimeInterface, and implement it in ConfigOverlay (#27)
 * Add ConfigOverlay::exportAll()
 
 ### 1.2.0 2019-02-15
