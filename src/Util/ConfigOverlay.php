@@ -15,7 +15,7 @@ use Consolidation\Config\Util\ConfigInterpolatorTrait;
  * individual configuration context. When using overlays, always call
  * getDefault / setDefault on the ConfigOverlay object itself.
  */
-class ConfigOverlay implements ConfigInterface, ConfigInterpolatorInterface
+class ConfigOverlay implements ConfigInterface, ConfigInterpolatorInterface, ConfigRuntimeInterface
 {
     use ConfigInterpolatorTrait;
     protected $contexts = [];
@@ -87,6 +87,11 @@ class ConfigOverlay implements ConfigInterface, ConfigInterpolatorInterface
             return $this->contexts[$name];
         }
         return new Config();
+    }
+
+    public function runtimeConfig()
+    {
+        return $this->getContext(self::PROCESS_CONTEXT);
     }
 
     public function removeContext($name)
