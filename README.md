@@ -39,7 +39,7 @@ command:
     options:
       color: red
 ```
-If a command name contains a `:`, then each section of the command name defines another level of heirarchy in the command option configuration. For example, to set a configuration value `George` for the option `--name` of the command `my:foo`:
+If a command name contains a `:`, then each section of the command name defines another level of hierarchy in the command option configuration. For example, to set a configuration value `George` for the option `--name` of the command `my:foo`:
 ```
 command:
   my:
@@ -47,7 +47,7 @@ command:
       options:
         name: George
 ```
-Furthermore, every level of the command name heirarchy may contain options. For example, to define a configuration value for the option `--dir` for any command that begins with `my:`:
+Furthermore, every level of the command name hierarchy may contain options. For example, to define a configuration value for the option `--dir` for any command that begins with `my:`:
 ```
 command:
   my:
