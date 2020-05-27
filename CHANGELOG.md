@@ -1,7 +1,8 @@
 # Changelog
 
-### 2.0.0 2019-02-06
+### 2.0.0 2020-05-27
 
+* Symfony 5 support
 * Test with PHP 7.4
 * Drop support for older versions of PHP
 
