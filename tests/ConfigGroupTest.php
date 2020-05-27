@@ -2,8 +2,9 @@
 namespace Consolidation\Config\Util;
 
 use Consolidation\Config\Config;
+use PHPUnit\Framework\TestCase;
 
-class ConfigGroupTest extends \PHPUnit_Framework_TestCase
+class ConfigGroupTest extends TestCase
 {
     protected $config;
 

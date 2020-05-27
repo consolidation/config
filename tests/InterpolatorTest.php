@@ -4,8 +4,9 @@ namespace Consolidation\Config;
 use Consolidation\Config\Loader\ConfigProcessor;
 use Consolidation\Config\Loader\YamlConfigLoader;
 use Consolidation\Config\Util\Interpolator;
+use PHPUnit\Framework\TestCase;
 
-class InterpolatorTest extends \PHPUnit_Framework_TestCase
+class InterpolatorTest extends TestCase
 {
     public function testFindTokens()
     {

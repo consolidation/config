@@ -3,8 +3,9 @@ namespace Consolidation\Config\Inject;
 
 use Consolidation\Config\Config;
 use Consolidation\TestUtils\ApplyConfigTestTarget;
+use PHPUnit\Framework\TestCase;
 
-class ConfigForSettersTest extends \PHPUnit_Framework_TestCase
+class ConfigForSettersTest extends TestCase
 {
     public function testApplyConfig()
     {
