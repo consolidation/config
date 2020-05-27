@@ -1,7 +1,9 @@
 <?php
 namespace Consolidation\Config\Loader;
 
-class ConfigLoaderTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ConfigLoaderTest extends TestCase
 {
     public function testConfigLoader()
     {

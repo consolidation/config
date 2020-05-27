@@ -4,8 +4,9 @@ namespace Consolidation\Config;
 use Consolidation\Config\Loader\ConfigProcessor;
 use Consolidation\Config\Loader\YamlConfigLoader;
 use Consolidation\Config\Util\Interpolator;
+use PHPUnit\Framework\TestCase;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends TestCase
 {
     public function testSetters()
     {
@@ -99,7 +100,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         // Set $config::defaults to a string to test exception
         $defaultsProperty->setValue($config, "foo.bar");
-        $this->setExpectedException("Exception");
+        $this->expectException("Exception");
         $getDefaultsMethod->invoke($config);
     }
 

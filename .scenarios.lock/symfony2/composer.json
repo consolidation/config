@@ -28,8 +28,8 @@
         "symfony/event-dispatcher": "^2.8",
         "phpunit/phpunit": "^4.8.36",
         "g1a/composer-test-scenarios": "^3",
-        "symfony/yaml": "^2.8.11|^3|^4",
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "^3",
+        "symfony/yaml": "^4|^5"
     },
     "suggest": {
         "symfony/yaml": "Required to use Consolidation\\Config\\Loader\\YamlConfigLoader"
@@ -58,7 +58,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "2.x-dev"
         }
     }
 }

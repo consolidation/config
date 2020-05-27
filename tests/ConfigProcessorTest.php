@@ -2,8 +2,9 @@
 namespace Consolidation\Config\Loader;
 
 use Consolidation\TestUtils\TestLoader;
+use PHPUnit\Framework\TestCase;
 
-class ConfigProcessorTest extends \PHPUnit_Framework_TestCase
+class ConfigProcessorTest extends TestCase
 {
     public function testConfigProcessorAdd()
     {

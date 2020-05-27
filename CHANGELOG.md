@@ -1,5 +1,10 @@
 # Changelog
 
+### 2.0.0 2019-02-06
+
+* Test with PHP 7.4
+* Drop support for older versions of PHP
+
 ### 1.2.1 2019-03-03
 
 * Add ConfigRuntimeInterface, and implement it in ConfigOverlay (#27)

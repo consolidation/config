@@ -43,5 +43,7 @@ class MyFooCommand extends Command
         $output->writeln('dir: ' . $input->getOption('dir'));
         $output->writeln('name: ' . $input->getOption('name'));
         $output->writeln('other: ' . $input->getOption('other'));
+
+        return 0;
     }
 }

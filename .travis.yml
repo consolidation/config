@@ -9,18 +9,12 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - php: 7.2
+    - php: 7.4
       env: 'SCENARIO=symfony4 DEPENDENCIES="update"'
+    - php: 7.3
+    - php: 7.2
     - php: 7.1
       env: 'SCENARIO=symfony4'
-    - php: 7.0.11
-      env: 'DEPENDENCIES="update"'
-    - php: 7.0.11
-    - php: 5.6
-    - php: 5.5
-      env: 'SCENARIO=symfony2'
-    - php: 5.4
-      env: 'SCENARIO=symfony2 DEPENDENCIES="update --prefer-lowest'
 
 sudo: false
 

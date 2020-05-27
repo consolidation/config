@@ -4,8 +4,9 @@ namespace Consolidation\Config\Util;
 use Consolidation\Config\Config;
 use Consolidation\Config\Loader\ConfigProcessor;
 use Consolidation\Config\Loader\YamlConfigLoader;
+use PHPUnit\Framework\TestCase;
 
-class ConfigOverlayTest extends \PHPUnit_Framework_TestCase
+class ConfigOverlayTest extends TestCase
 {
     protected $overlay;
 
