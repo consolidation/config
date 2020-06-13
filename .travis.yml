@@ -1,9 +1,9 @@
 language: php
 
 branches:
-  # Only test the master branch and SemVer tags.
+  # Only test the main branch and SemVer tags.
   only:
-    - master
+    - main
     - /^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+.*$/
 
 matrix:

@@ -2,9 +2,9 @@
 
 Manage configuration for a commandline tool.
 
-[![Travis CI](https://travis-ci.org/consolidation/config.svg?branch=master)](https://travis-ci.org/consolidation/config) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/consolidation/config/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/consolidation/config/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/consolidation/config/badge.svg?branch=master)](https://coveralls.io/github/consolidation/config?branch=master)
+[![Travis CI](https://travis-ci.org/consolidation/config.svg?branch=main)](https://travis-ci.org/consolidation/config) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/consolidation/config/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/consolidation/config/?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/consolidation/config/badge.svg?branch=main)](https://coveralls.io/github/consolidation/config?branch=main)
 [![License](https://poser.pugx.org/consolidation/config/license)](https://packagist.org/packages/consolidation/config)
 
 This component is designed to provide the components needed to manage configuration options from different sources, including:
