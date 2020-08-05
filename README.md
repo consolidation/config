@@ -20,7 +20,7 @@ If your goal is to be able to quickly write configurable commandline tools, you 
 
 ## Component Status
 
-In use in Robo (1.x), Terminus (1.x) and Drush (9.x).
+In use in Robo, Terminus and Drush.
 
 ## Motivation
 
