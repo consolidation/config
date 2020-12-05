@@ -17,7 +17,7 @@ class ConfigForCommandTest extends TestCase
 {
     protected $config;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $data = [
             // Global options
