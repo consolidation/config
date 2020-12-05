@@ -154,5 +154,5 @@ jobs:
       - name: Run tests with phpunit
         run: composer unit
       
-      - name: Publish code coverage to Coveralls
-        run: php vendor/bin/php-coveralls -v
+      - name: Publish code coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
