@@ -150,4 +150,4 @@ jobs:
         run: composer unit
       
       - name: Publish code coverage to Coveralls
-        run: php vendor/bin/coveralls -v
+        run: php vendor/bin/php-coveralls -v
