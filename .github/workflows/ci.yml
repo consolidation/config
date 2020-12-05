@@ -57,13 +57,11 @@ jobs:
           coverage: none
           extensions: intl
 
-      - name: Install roave/backward-compatibility-check
-        run: |
-          mkdir -p tools
-          composer --working-dir=tools require roave/backward-compatibility-check:^5
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-progress
 
-      - name: Run roave/backward-compatibility-check
-        run: ./tools/vendor/bin/roave-backward-compatibility-check --from=2.0.0
+      - name: Run roave/backward-compatibility-check (temporarily disabled)
+        run: echo ./vendor/bin/roave-backward-compatibility-check --from=2.0.0
 
   tests:
     name: Tests
@@ -150,3 +148,6 @@ jobs:
 
       - name: Run tests with phpunit
         run: composer unit
+      
+      - name: Publish code coverage to Coveralls
+        run: php vendor/bin/coveralls -v
