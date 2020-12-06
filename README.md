@@ -2,7 +2,7 @@
 
 Manage configuration for a commandline tool.
 
-[![Travis CI](https://travis-ci.org/consolidation/config.svg?branch=main)](https://travis-ci.org/consolidation/config) 
+[![CI](https://github.com/consolidation/config/workflows/CI/badge.svg)](https://travis-ci.org/consolidation/config)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/consolidation/config/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/consolidation/config/?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/consolidation/config/badge.svg?branch=main)](https://coveralls.io/github/consolidation/config?branch=main)
 [![License](https://poser.pugx.org/consolidation/config/license)](https://packagist.org/packages/consolidation/config)

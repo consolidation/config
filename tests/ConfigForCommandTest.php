@@ -17,7 +17,7 @@ class ConfigForCommandTest extends TestCase
 {
     protected $config;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $data = [
             // Global options
@@ -94,13 +94,13 @@ What is the name of the thing we are naming [default: "baz"]
 EOT;
 
         $this->assertEquals(0, $status);
-        $this->assertContains($expectedOutput, $output);
+        $this->assertStringContainsString($expectedOutput, $output);
 
         $expectedOutput = <<< EOT
 A certain global option. [default: "from-config"]
 EOT;
 
-        $this->assertContains($expectedOutput, $output);
+        $this->assertStringContainsString($expectedOutput, $output);
     }
 
     protected function runCommandViaApplication($command, $input)

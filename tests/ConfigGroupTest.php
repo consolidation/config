@@ -8,7 +8,7 @@ class ConfigGroupTest extends TestCase
 {
     protected $config;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $data = [
             // Define some configuration settings for the options for

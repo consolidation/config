@@ -124,13 +124,10 @@ class ConfigOverlayTest extends TestCase
         $this->assertEquals('a-value', $export['a']['duplicate']);
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testImport()
     {
         $overlay = $this->createOverlay();
-
+        $this->expectException(\Exception::class);
         $data = $overlay->import(['a' => 'value']);
     }
 
