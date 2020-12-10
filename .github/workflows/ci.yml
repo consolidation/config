@@ -161,5 +161,5 @@ jobs:
         run: composer unit
       
       - name: Publish code coverage to Codecov
-        if: matrix.codecov == 'true'
+        if: matrix.codecov == true
         run: bash <(curl -s https://codecov.io/bash)
