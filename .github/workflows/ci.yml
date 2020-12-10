@@ -90,6 +90,9 @@ jobs:
 
         dependencies:
           - locked
+        
+        codecov:
+          - false
 
         include:
           - os: ubuntu-latest
@@ -103,6 +106,7 @@ jobs:
           - os: ubuntu-latest
             php-version: "8.0"
             dependencies: locked
+            codecov: true
             php-ini-values: assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=4096M, opcache.jit=1205
 
     steps:
@@ -133,15 +137,17 @@ jobs:
           restore-keys: |
             php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-
 
+      - name: Make sure composer.json is valid before we start modifyig it
+        run: composer validate
+        
       - name: Clear platform php configuration in case we need to update phpunit
         run: composer config --unset platform.php
 
-      - name: Install dependencies
-        run: composer install --no-ansi --no-interaction --no-progress
-
       - name: Update phpunit if dependencies are locked in case phpunit version in lock file is not compatible
         if: matrix.dependencies == 'locked'
-        run: composer update --no-ansi --no-interaction --no-progress phpunit/phpunit --with-all-dependencies
+        run: |
+          composer install --no-ansi --no-interaction --no-progress
+          composer update --no-ansi --no-interaction --no-progress phpunit/phpunit --with-all-dependencies
 
       - name: Install lowest dependencies with composer
         if: matrix.dependencies == 'lowest'
@@ -155,5 +161,5 @@ jobs:
         run: composer unit
       
       - name: Publish code coverage to Codecov
-        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '8.0'
+        if: matrix.codecov == 'true'
         run: bash <(curl -s https://codecov.io/bash)
