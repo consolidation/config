@@ -11,15 +11,15 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
     use ConfigInterpolatorTrait;
 
     /**
-     * @var Data
+     * @var \Dflydev\DotAccessData\Data
      */
     protected $config;
 
     /**
      * TODO: make this private in 2.0 to prevent being saved as an array
-     *   Making private now breaks backward compatibility
+     * Making private now breaks backward compatibility
      *
-     * @var Data
+     * @var \Dflydev\DotAccessData\Data
      */
     protected $defaults;
 
@@ -27,7 +27,8 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
      * Create a new configuration object, and initialize it with
      * the provided nested array containing configuration data.
      *
-     * @param array $data - Config data to store
+     * @param array $data
+     *   Config data to store.
      */
     public function __construct(array $data = null)
     {
@@ -128,7 +129,7 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
      * Return the class $defaults property and ensure it's a Data object
      * TODO: remove Data object validation in 2.0
      *
-     * @return Data
+     * @return \Dflydev\DotAccessData\Data
      */
     protected function getDefaults()
     {
@@ -143,7 +144,7 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
      * Sets the $defaults class parameter
      * TODO: remove support for array in 2.0 as this would currently break backward compatibility
      *
-     * @param Data|array $defaults
+     * @param \Dflydev\DotAccessData\Data|array $defaults
      *
      * @throws \Exception
      */

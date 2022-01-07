@@ -5,18 +5,18 @@ namespace Consolidation\Config;
 interface ConfigAwareInterface
 {
     /**
-     * Set the config reference
+     * Set the config reference.
      *
-     * @param ConfigInterface $config
+     * @param \Consolidation\Config\ConfigInterface $config
      *
      * @return $this
      */
     public function setConfig(ConfigInterface $config);
 
     /**
-     * Get the config reference
+     * Get the config reference.
      *
-     * @return ConfigInterface
+     * @return \Consolidation\Config\ConfigInterface
      */
     public function getConfig();
 }

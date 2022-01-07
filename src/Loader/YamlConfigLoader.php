@@ -10,6 +10,10 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlConfigLoader extends ConfigLoader
 {
+
+    /**
+     * {@inheritdoc}
+     */
     public function load($path)
     {
         $this->setSourceName($path);

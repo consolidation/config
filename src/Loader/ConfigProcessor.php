@@ -11,9 +11,25 @@ use Consolidation\Config\Util\ArrayUtil;
  */
 class ConfigProcessor
 {
+
+    /**
+     * @var array
+     */
     protected $processedConfig = [];
+
+    /**
+     * @var array
+     */
     protected $unprocessedConfig = [];
+
+    /**
+     * @var array
+     */
     protected $nameOfItemsToMerge = [];
+
+    /**
+     * @var \Grasmash\Expander\Expander
+     */
     protected $expander;
 
     public function __construct($expander = null)
@@ -26,6 +42,10 @@ class ConfigProcessor
      * from different sources. This method will allow applications to alter
      * this behavior for specific items so that strings from multiple sources
      * will be merged together into an array instead.
+     *
+     * @param string|array
+     *
+     * @return $this
      */
     public function useMergeStrategyForKeys($itemName)
     {
@@ -41,7 +61,9 @@ class ConfigProcessor
      * Extend the configuration to be processed with the
      * configuration provided by the specified loader.
      *
-     * @param ConfigLoaderInterface $loader
+     * @param \Consolidation\Config\Loader\ConfigLoaderInterface $loader
+     *
+     * @return $this
      */
     public function extend(ConfigLoaderInterface $loader)
     {
@@ -53,6 +75,8 @@ class ConfigProcessor
      * the provided nested array.
      *
      * @param array $data
+     *
+     * @return $this
      */
     public function add($data)
     {
@@ -67,6 +91,8 @@ class ConfigProcessor
      *
      * @param array $data
      * @param string $source
+     *
+     * @return $this
      */
     protected function addFromSource($data, $source = '')
     {
@@ -80,6 +106,8 @@ class ConfigProcessor
     /**
      * Process all of the configuration that has been collected,
      * and return a nested array.
+     *
+     * @param array $referenceArray
      *
      * @return array
      */
@@ -99,6 +127,8 @@ class ConfigProcessor
      * To aid in debugging: return the source of each configuration item.
      * n.b. Must call this function *before* export and save the result
      * if persistence is desired.
+     *
+     * @return array
      */
     public function sources()
     {
@@ -131,6 +161,8 @@ class ConfigProcessor
      *
      * @param array $processed
      * @param array $toBeProcessed
+     * @param array $referenceArray
+     *
      * @return array
      */
     protected function process(array $processed, array $toBeProcessed, $referenceArray = [])
@@ -147,6 +179,7 @@ class ConfigProcessor
      * expansion of the configuration keys, etc.
      *
      * @param array $config
+     *
      * @return array
      */
     protected function preprocess(array $config)
@@ -160,6 +193,7 @@ class ConfigProcessor
      *
      * @param array $processed
      * @param array $config
+     *
      * @return array
      */
     protected function reduceOne(array $processed, array $config)
@@ -172,6 +206,7 @@ class ConfigProcessor
      *
      * @param array $processed
      * @param array $config
+     *
      * @return array
      */
     protected function evaluate(array $config, $referenceArray = [])

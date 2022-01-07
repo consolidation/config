@@ -5,14 +5,14 @@ namespace Consolidation\Config;
 trait ConfigAwareTrait
 {
     /**
-     * @var ConfigInterface
+     * @var \Consolidation\Config\ConfigInterface
      */
     protected $config;
 
     /**
      * Set the config management object.
      *
-     * @param ConfigInterface $config
+     * @param \Consolidation\Config\ConfigInterface $config
      *
      * @return $this
      */
@@ -26,7 +26,7 @@ trait ConfigAwareTrait
     /**
      * Get the config management object.
      *
-     * @return ConfigInterface
+     * @return \Consolidation\Config\ConfigInterface
      */
     public function getConfig()
     {

@@ -1,28 +1,32 @@
 <?php
+
 namespace Consolidation\Config;
 
 interface ConfigInterface
 {
     /**
      * Determine if a non-default config value exists.
+     *
+     * @param string $key
      */
     public function has($key);
 
     /**
-     * Fetch a configuration value
+     * Fetch a configuration value.
      *
-     * @param string $key Which config item to look up
-     * @param string|null $defaultFallback Fallback default value to use when
-     *   configuration object has neither a value nor a default. Use is
-     *   discouraged; use default context in ConfigOverlay, or provide defaults
-     *   using a config processor.
+     * @param string $key
+     *   Which config item to look up
+     * @param string|null $defaultFallback
+     *   Fallback default value to use when configuration object has neither a
+     *   value nor a default. Use is discouraged; use default context in
+     *   ConfigOverlay, or provide defaults using a config processor.
      *
      * @return mixed
      */
     public function get($key, $defaultFallback = null);
 
     /**
-     * Set a config value
+     * Set a config value.
      *
      * @param string $key
      * @param mixed $value
@@ -35,9 +39,11 @@ interface ConfigInterface
      * Import configuration from the provided nexted array, replacing whatever
      * was here previously. No processing is done on the provided data.
      *
-     * @deprecated Use 'replace'. Dflydev\DotAccessData\Data::import() merges, which is confusing, since this method replaces.
+     * @deprecated Use 'replace'. Dflydev\DotAccessData\Data::import() merges,
+     *   which is confusing, since this method replaces.
      *
      * @param array $data
+     *
      * @return Config
      */
     public function import($data);
@@ -50,6 +56,7 @@ interface ConfigInterface
      * would break clients that implement ConfigInterface.
      *
      * @param array $data
+     *
      * @return Config
      */
     // public function replace($data);
@@ -64,21 +71,24 @@ interface ConfigInterface
      * would break clients that implement ConfigInterface.
      *
      * @param array $data
+     *
      * @return Config
      */
     // public function combine($data);
 
     /**
      * Export all configuration as a nested array.
+     *
+     * @return array
      */
     public function export();
 
     /**
-     * Return the default value for a given configuration item.
+     * Check if the $key exists has default value.
      *
      * @param string $key
      *
-     * @return mixed
+     * @return bool
      */
     public function hasDefault($key);
 

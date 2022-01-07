@@ -1,7 +1,7 @@
 <?php
+
 namespace Consolidation\Config\Util;
 
-use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
 
 /**
@@ -21,10 +21,12 @@ interface ConfigInterpolatorInterface extends ConfigInterface
      * is fetched from the config object, and the token {{user.name}} is
      * replaced with the result.
      *
-     * @param string $message Message containing tokens to be replaced
-     * @param string|bool $default The value to substitute for tokens that
-     *   are not found in the configuration. If `false`, then missing
-     *   tokens are not replaced.
+     * @param string $message
+     *   Message containing tokens to be replaced.
+     * @param string|bool $default
+     *   The value to substitute for tokens that are not found in the
+     *   configuration. If `false`, then missing tokens are not replaced.
+     *
      * @return string
      */
     public function interpolate($message, $default = '');
