@@ -1,4 +1,5 @@
 <?php
+
 namespace Consolidation\Config\Util;
 
 /**
@@ -19,8 +20,9 @@ namespace Consolidation\Config\Util;
  */
 class ConfigFallback extends ConfigGroup
 {
+
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($key)
     {

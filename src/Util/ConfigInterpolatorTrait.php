@@ -1,8 +1,6 @@
 <?php
-namespace Consolidation\Config\Util;
 
-use Consolidation\Config\Config;
-use Consolidation\Config\ConfigInterface;
+namespace Consolidation\Config\Util;
 
 /**
  * Provides configuration objects with an 'interpolate' method
@@ -11,6 +9,10 @@ use Consolidation\Config\ConfigInterface;
  */
 trait ConfigInterpolatorTrait
 {
+
+    /**
+     * @var \Consolidation\Config\Util\Interpolator
+     */
     protected $interpolator;
 
     protected function getInterpolator()
@@ -20,8 +22,9 @@ trait ConfigInterpolatorTrait
         }
         return $this->interpolator;
     }
+
     /**
-     * @inheritdoc
+     * {@inheritdoc }
      */
     public function interpolate($message, $default = '')
     {
@@ -29,7 +32,7 @@ trait ConfigInterpolatorTrait
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function mustInterpolate($message)
     {

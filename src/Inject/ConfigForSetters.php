@@ -1,4 +1,5 @@
 <?php
+
 namespace Consolidation\Config\Inject;
 
 use Consolidation\Config\Util\ConfigMerge;
@@ -13,8 +14,18 @@ use Consolidation\Config\Util\ConfigMerge;
  */
 class ConfigForSetters
 {
+
+    /**
+     * @var \Consolidation\Config\Util\ConfigMerge
+     */
     protected $config;
 
+    /**
+     * @param \Consolidation\Config\ConfigInterface $config
+     * @param string $group
+     * @param string $prefix
+     * @param string $postfix
+     */
     public function __construct($config, $group, $prefix = '', $postfix = '')
     {
         if (!empty($group) && empty($postfix)) {
@@ -24,6 +35,10 @@ class ConfigForSetters
         $this->config = new ConfigMerge($config, $group, $prefix, $postfix);
     }
 
+    /**
+     * @param object $object
+     * @param string $configurationKey
+     */
     public function apply($object, $configurationKey)
     {
         $settings = $this->config->get($configurationKey);

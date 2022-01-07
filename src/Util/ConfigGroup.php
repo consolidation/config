@@ -1,4 +1,5 @@
 <?php
+
 namespace Consolidation\Config\Util;
 
 /**
@@ -19,11 +20,33 @@ namespace Consolidation\Config\Util;
  */
 abstract class ConfigGroup
 {
+
+    /**
+     * @var \Consolidation\Config\ConfigInterface
+     */
     protected $config;
+
+    /**
+     * @var string
+     */
     protected $group;
+
+    /**
+     * @var string
+     */
     protected $prefix;
+
+    /**
+     * @var string
+     */
     protected $postfix;
 
+    /**
+     * @param \Consolidation\Config\ConfigInterface $config
+     * @param string $group
+     * @param string $prefix
+     * @param string $postfix
+     */
     public function __construct($config, $group, $prefix = '', $postfix = '.')
     {
         $this->config = $config;
@@ -34,6 +57,10 @@ abstract class ConfigGroup
 
     /**
      * Return a description of the configuration group (with prefix and postfix).
+     *
+     * @param string $property
+     *
+     * @return string
      */
     public function describe($property)
     {
@@ -43,12 +70,20 @@ abstract class ConfigGroup
     /**
      * Get the requested configuration key from the most specific configuration
      * group that contains it.
+     *
+     * @param string $key
+     *
+     * @return mixed
      */
     abstract public function get($key);
 
     /**
      * Given a group name, such as "foo.bar.baz", return the next configuration
      * group in the fallback hierarchy, e.g. "foo.bar".
+     *
+     * @param string $group
+     *
+     * @return false|string
      */
     protected function moreGeneralGroupName($group)
     {

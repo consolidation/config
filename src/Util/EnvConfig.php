@@ -1,7 +1,7 @@
 <?php
+
 namespace Consolidation\Config\Util;
 
-use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
 
 /**
@@ -10,16 +10,18 @@ use Consolidation\Config\ConfigInterface;
  */
 class EnvConfig implements ConfigInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $prefix;
 
     /**
      * EnvConfig constructor
      *
-     * @param $prefix The string to appear before every environment
-     *   variable key. For example, if the prefix is 'MYAPP_', then
-     *   the key 'foo.bar' will be fetched from the environment variable
-     *   MYAPP_FOO_BAR.
+     * @param string $prefix
+     *   The string to appear before every environment variable key.
+     *   For example, if the prefix is 'MYAPP_', then the key 'foo.bar' will be
+     *   fetched from the environment variable MYAPP_FOO_BAR.
      */
     public function __construct($prefix)
     {
@@ -29,7 +31,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function has($key)
     {
@@ -37,7 +39,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($key, $defaultFallback = null)
     {
@@ -47,7 +49,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function set($key, $value)
     {
@@ -55,7 +57,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function import($data)
     {
@@ -63,7 +65,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function export()
     {
@@ -71,7 +73,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function hasDefault($key)
     {
@@ -79,7 +81,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDefault($key, $defaultFallback = null)
     {
@@ -87,7 +89,7 @@ class EnvConfig implements ConfigInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setDefault($key, $value)
     {
