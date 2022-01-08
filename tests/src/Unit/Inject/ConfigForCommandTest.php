@@ -1,19 +1,17 @@
 <?php
-namespace Consolidation\Config\Inject;
+
+namespace Consolidation\Config\Tests\Unit\Inject;
 
 use Consolidation\Config\Config;
-use Consolidation\TestUtils\MyFooCommand;
-use PHPUnit\Framework\TestCase;
+use Consolidation\Config\Inject\ConfigForCommand;
+use Consolidation\Config\Tests\Helper\MyFooCommand;
+use Consolidation\Config\Tests\Unit\TestBase;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class ConfigForCommandTest extends TestCase
+class ConfigForCommandTest extends TestBase
 {
     protected $config;
 
@@ -51,7 +49,7 @@ class ConfigForCommandTest extends TestCase
         $command = new MyFooCommand();
         $input = new StringInput('my:foo');
 
-        list($status, $output) = $this->runCommandViaApplication($command, $input);
+        [$status, $output] = $this->runCommandViaApplication($command, $input);
 
         $expectedOutput = <<< EOT
 Enter my:foo
@@ -69,7 +67,7 @@ EOT;
         $command = new MyFooCommand();
         $input = new StringInput('my:foo --name=Fred');
 
-        list($status, $output) = $this->runCommandViaApplication($command, $input);
+        [$status, $output] = $this->runCommandViaApplication($command, $input);
 
         $expectedOutput = <<< EOT
 Enter my:foo
@@ -87,7 +85,7 @@ EOT;
         $command = new MyFooCommand();
         $input = new StringInput('help my:foo');
 
-        list($status, $output) = $this->runCommandViaApplication($command, $input);
+        [$status, $output] = $this->runCommandViaApplication($command, $input);
 
         $expectedOutput = <<< EOT
 What is the name of the thing we are naming [default: "baz"]

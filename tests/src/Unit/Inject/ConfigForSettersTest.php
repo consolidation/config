@@ -1,11 +1,13 @@
 <?php
-namespace Consolidation\Config\Inject;
+
+namespace Consolidation\Config\Tests\Unit\Inject;
 
 use Consolidation\Config\Config;
-use Consolidation\TestUtils\ApplyConfigTestTarget;
-use PHPUnit\Framework\TestCase;
+use Consolidation\Config\Inject\ConfigForSetters;
+use Consolidation\Config\Tests\Helper\ApplyConfigTestTarget;
+use Consolidation\Config\Tests\Unit\TestBase;
 
-class ConfigForSettersTest extends TestCase
+class ConfigForSettersTest extends TestBase
 {
     public function testApplyConfig()
     {
@@ -83,6 +85,6 @@ class ConfigForSettersTest extends TestCase
         // way (via reflection) until php 7, so we allow these methods to be
         // called for now.
         $this->assertEquals('fire truck', $testTarget->getBad());
-        $this->assertEquals('Consolidation\\TestUtils\\ApplyConfigTestTarget::bad did not return \'$this\' when processing task.Operations.Frobulate.settings.', $exceptionMessage);
+        $this->assertEquals('Consolidation\\Config\\Tests\\Helper\\ApplyConfigTestTarget::bad did not return \'$this\' when processing task.Operations.Frobulate.settings.', $exceptionMessage);
     }
 }

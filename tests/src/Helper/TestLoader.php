@@ -1,6 +1,6 @@
 <?php
 
-namespace Consolidation\TestUtils;
+namespace Consolidation\Config\Tests\Helper;
 
 use Consolidation\Config\Loader\ConfigLoaderInterface;
 

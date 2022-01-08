@@ -1,10 +1,13 @@
 <?php
-namespace Consolidation\Config\Util;
+
+namespace Consolidation\Config\Tests\Unit\Util;
 
 use Consolidation\Config\Config;
-use PHPUnit\Framework\TestCase;
+use Consolidation\Config\Tests\Unit\TestBase;
+use Consolidation\Config\Util\ConfigFallback;
+use Consolidation\Config\Util\ConfigMerge;
 
-class ConfigGroupTest extends TestCase
+class ConfigGroupTest extends TestBase
 {
     protected $config;
 

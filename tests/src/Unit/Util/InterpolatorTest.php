@@ -1,12 +1,11 @@
 <?php
-namespace Consolidation\Config;
 
-use Consolidation\Config\Loader\ConfigProcessor;
-use Consolidation\Config\Loader\YamlConfigLoader;
+namespace Consolidation\Config\Tests\Unit\Util;
+
+use Consolidation\Config\Tests\Unit\TestBase;
 use Consolidation\Config\Util\Interpolator;
-use PHPUnit\Framework\TestCase;
 
-class InterpolatorTest extends TestCase
+class InterpolatorTest extends TestBase
 {
     public function testFindTokens()
     {
