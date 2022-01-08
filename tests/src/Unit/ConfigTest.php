@@ -1,12 +1,13 @@
 <?php
-namespace Consolidation\Config;
 
+namespace Consolidation\Config\Tests\Unit;
+
+use Consolidation\Config\Config;
 use Consolidation\Config\Loader\ConfigProcessor;
 use Consolidation\Config\Loader\YamlConfigLoader;
-use Consolidation\Config\Util\Interpolator;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\SkippedTestError;
 
-class ConfigTest extends TestCase
+class ConfigTest extends TestBase
 {
     public function testSetters()
     {
@@ -106,12 +107,14 @@ class ConfigTest extends TestCase
 
     public function testConfigurationWithCrossFileReferences()
     {
+        $fixturesDir = $this->getFixturesDir();
+
         $config = new Config();
         $processor = new ConfigProcessor();
         $loader = new YamlConfigLoader();
-        $processor->extend($loader->load(__DIR__ . '/data/config-1.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-2.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-3.yml'));
+        $processor->extend($loader->load("$fixturesDir/config-1.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-2.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-3.yml"));
 
         // Does not fail if configuration file cannot be found
         $processor->extend($loader->load(__DIR__ . '/data/no-such-file.yml'));
@@ -125,19 +128,20 @@ class ConfigTest extends TestCase
         $this->assertEquals(implode(',', $config->get('m')), '3');
         $this->assertEquals($config->get('a'), 'foobarbaz');
 
-        $this->assertEquals($sources['a'], __DIR__ . '/data/config-3.yml');
-        $this->assertEquals($sources['b'], __DIR__ . '/data/config-2.yml');
-        $this->assertEquals($sources['c'], __DIR__ . '/data/config-1.yml');
+        $this->assertEquals($sources['a'], "$fixturesDir/config-3.yml");
+        $this->assertEquals($sources['b'], "$fixturesDir/config-2.yml");
+        $this->assertEquals($sources['c'], "$fixturesDir/config-1.yml");
     }
 
     public function testConfigurationWithReverseOrderCrossFileReferences()
     {
+        $fixturesDir = $this->getFixturesDir();
         $config = new Config();
         $processor = new ConfigProcessor();
         $loader = new YamlConfigLoader();
-        $processor->extend($loader->load(__DIR__ . '/data/config-3.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-2.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-1.yml'));
+        $processor->extend($loader->load("$fixturesDir/config-3.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-2.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-1.yml"));
 
         $sources = $processor->sources();
         $config->import($processor->export());
@@ -145,14 +149,14 @@ class ConfigTest extends TestCase
         $this->assertEquals(implode(',', $config->get('m')), '1');
 
         if (strpos($config->get('a'), '$') !== false) {
-            throw new \PHPUnit_Framework_SkippedTestError(
+            throw new SkippedTestError(
                 'Evaluation of cross-file references in reverse order not supported.'
             );
         }
         $this->assertEquals($config->get('a'), 'foobarbaz');
 
-        $this->assertEquals($sources['a'], __DIR__ . '/data/config-3.yml');
-        $this->assertEquals($sources['b'], __DIR__ . '/data/config-2.yml');
-        $this->assertEquals($sources['c'], __DIR__ . '/data/config-1.yml');
+        $this->assertEquals($sources['a'], "$fixturesDir/config-3.yml");
+        $this->assertEquals($sources['b'], "$fixturesDir/config-2.yml");
+        $this->assertEquals($sources['c'], "$fixturesDir/config-1.yml");
     }
 }

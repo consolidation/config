@@ -1,12 +1,12 @@
 <?php
-namespace Consolidation\Config\Util;
+
+namespace Consolidation\Config\Tests\Unit\Util;
 
 use Consolidation\Config\Config;
-use Consolidation\Config\Loader\ConfigProcessor;
-use Consolidation\Config\Loader\YamlConfigLoader;
-use PHPUnit\Framework\TestCase;
+use Consolidation\Config\Tests\Unit\TestBase;
+use Consolidation\Config\Util\ConfigOverlay;
 
-class ConfigOverlayTest extends TestCase
+class ConfigOverlayTest extends TestBase
 {
     protected $overlay;
 

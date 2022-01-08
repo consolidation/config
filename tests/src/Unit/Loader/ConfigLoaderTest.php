@@ -1,16 +1,19 @@
 <?php
-namespace Consolidation\Config\Loader;
 
-use PHPUnit\Framework\TestCase;
+namespace Consolidation\Config\Tests\Unit\Loader;
 
-class ConfigLoaderTest extends TestCase
+use Consolidation\Config\Loader\YamlConfigLoader;
+use Consolidation\Config\Tests\Unit\TestBase;
+
+class ConfigLoaderTest extends TestBase
 {
     public function testConfigLoader()
     {
+        $fixturesDir = $this->getFixturesDir();
         $loader = new YamlConfigLoader();
 
         // Assert that our test data exists (test the test)
-        $path = __DIR__ . '/data/config-1.yml';
+        $path = "$fixturesDir/config-1.yml";
         $this->assertTrue(file_exists($path));
 
         $loader->load($path);

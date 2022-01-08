@@ -1,10 +1,13 @@
 <?php
-namespace Consolidation\Config\Loader;
 
-use Consolidation\TestUtils\TestLoader;
-use PHPUnit\Framework\TestCase;
+namespace Consolidation\Config\Tests\Unit\Loader;
 
-class ConfigProcessorTest extends TestCase
+use Consolidation\Config\Loader\ConfigProcessor;
+use Consolidation\Config\Loader\YamlConfigLoader;
+use Consolidation\Config\Tests\Helper\TestLoader;
+use Consolidation\Config\Tests\Unit\TestBase;
+
+class ConfigProcessorTest extends TestBase
 {
     public function testConfigProcessorAdd()
     {
@@ -139,11 +142,12 @@ class ConfigProcessorTest extends TestCase
 
     public function testConfiProcessorSources()
     {
+        $fixturesDir = $this->getFixturesDir();
         $processor = new ConfigProcessor();
         $loader = new YamlConfigLoader();
-        $processor->extend($loader->load(__DIR__ . '/data/config-1.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-2.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-3.yml'));
+        $processor->extend($loader->load("$fixturesDir/config-1.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-2.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-3.yml"));
 
         $sources = $processor->sources();
 
@@ -154,19 +158,20 @@ class ConfigProcessorTest extends TestCase
 
         $this->assertEquals('3', $data['m'][0]);
 
-        $this->assertEquals( __DIR__ . '/data/config-3.yml', $sources['a']);
-        $this->assertEquals( __DIR__ . '/data/config-2.yml', $sources['b']);
-        $this->assertEquals( __DIR__ . '/data/config-1.yml', $sources['c']);
-        $this->assertEquals( __DIR__ . '/data/config-3.yml', $sources['m']);
+        $this->assertEquals( "$fixturesDir/config-3.yml", $sources['m']);
+        $this->assertEquals( "$fixturesDir/config-3.yml", $sources['a']);
+        $this->assertEquals( "$fixturesDir/config-2.yml", $sources['b']);
+        $this->assertEquals( "$fixturesDir/config-1.yml", $sources['c']);
     }
 
-    public function testConfiProcessorSourcesLoadInReverseOrder()
+    public function testConfigProcessorSourcesLoadInReverseOrder()
     {
+        $fixturesDir = $this->getFixturesDir();
         $processor = new ConfigProcessor();
         $loader = new YamlConfigLoader();
-        $processor->extend($loader->load(__DIR__ . '/data/config-3.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-2.yml'));
-        $processor->extend($loader->load(__DIR__ . '/data/config-1.yml'));
+        $processor->extend($loader->load("$fixturesDir/config-3.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-2.yml"));
+        $processor->extend($loader->load("$fixturesDir/config-1.yml"));
 
         $sources = $processor->sources();
 
@@ -177,9 +182,9 @@ class ConfigProcessorTest extends TestCase
 
         $this->assertEquals('1', $data['m'][0]);
 
-        $this->assertEquals( __DIR__ . '/data/config-3.yml', $sources['a']);
-        $this->assertEquals( __DIR__ . '/data/config-2.yml', $sources['b']);
-        $this->assertEquals( __DIR__ . '/data/config-1.yml', $sources['c']);
-        $this->assertEquals( __DIR__ . '/data/config-1.yml', $sources['m']);
+        $this->assertEquals( "$fixturesDir/config-3.yml", $sources['a']);
+        $this->assertEquals( "$fixturesDir/config-2.yml", $sources['b']);
+        $this->assertEquals( "$fixturesDir/config-1.yml", $sources['c']);
+        $this->assertEquals( "$fixturesDir/config-1.yml", $sources['m']);
     }
 }

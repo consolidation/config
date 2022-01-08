@@ -109,7 +109,7 @@ interface ConfigInterface
      * allows us to determine when a setting has been overridden.
      *
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      */
     public function setDefault($key, $value);
 }
