@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.0.3 2022-02-13
+
+* Allow dflydev/dot-access-data ^2 and ^3 (#48)
+
 ### 2.0.2 2021-12-29
 
 * PHP 8.1
