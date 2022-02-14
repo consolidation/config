@@ -1,5 +1,8 @@
+
+/build/
+/tools/
+/vendor/
+
+/phpunit.xml
+
 .DS_Store
-vendor
-build
-.phpunit.result.cache
-tools
