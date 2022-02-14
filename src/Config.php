@@ -30,9 +30,9 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
      * @param array $data
      *   Config data to store.
      */
-    public function __construct(array $data = [])
+    public function __construct(array $data = null)
     {
-        $this->config = new Data($data);
+        $this->config = new Data($data ?: []);
         $this->setDefaults(new Data());
     }
 
