@@ -32,7 +32,7 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
      */
     public function __construct(array $data = null)
     {
-        $this->config = new Data($data);
+        $this->config = new Data($data ?: []);
         $this->setDefaults(new Data());
     }
 
