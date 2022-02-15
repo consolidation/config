@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37c104d5c58342a7dd4194fc91b2bb56",
+    "content-hash": "9dcc52ee6ce42abcff656e0bfdf4b983",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -83,7 +83,7 @@
         },
         {
             "name": "grasmash/expander",
-            "version": "dev-master",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/grasmash/expander.git",
@@ -106,7 +106,6 @@
                 "phpunit/phpunit": "^6.0 || ^8.0 || ^9",
                 "squizlabs/php_codesniffer": "^2.7 || ^3.3"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -130,7 +129,7 @@
             "description": "Expands internal property references in PHP arrays file.",
             "support": {
                 "issues": "https://github.com/grasmash/expander/issues",
-                "source": "https://github.com/grasmash/expander/tree/master"
+                "source": "https://github.com/grasmash/expander/tree/2.0.0"
             },
             "time": "2021-12-08T01:46:56+00:00"
         },
@@ -3483,9 +3482,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "grasmash/expander": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
