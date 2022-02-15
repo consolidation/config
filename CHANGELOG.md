@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.0.4 2002-02-15
+
+* BUFIX: Fixed fatal error when using dflydev/dot-access-data ^3
+
 ### 2.0.3 2022-02-13
 
 * Allow dflydev/dot-access-data ^2 and ^3 (#48)
