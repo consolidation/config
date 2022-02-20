@@ -1,6 +1,10 @@
 # Changelog
 
-### 2.0.4 2002-02-15
+### 2.0.5 2022-02-20
+
+* B/C FIX: Convert null to empty array before passing to dflydev/dot-access-data
+
+### 2.0.4 2022-02-15
 
 * BUFIX: Fixed fatal error when using dflydev/dot-access-data ^3
 
