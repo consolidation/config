@@ -77,7 +77,7 @@ class Config implements ConfigInterface, ConfigInterpolatorInterface
      */
     public function replace($data)
     {
-        $this->config = new Data($data);
+        $this->config = new Data($data ?: []);
         return $this;
     }
 
