@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.0.6 2022-02-21
+
+* Symfony 6
+
 ### 2.0.5 2022-02-20
 
 * B/C FIX: Convert null to empty array before passing to dflydev/dot-access-data
