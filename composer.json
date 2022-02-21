@@ -39,7 +39,10 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4.9"
+        }
     },
     "scripts": {
         "cs": "phpcs --standard=PSR2 -n src",
