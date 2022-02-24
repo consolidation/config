@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.1.0 2022-02-23
+
+* Remove direct dependency on psr/log. Drop support for grasmash/expander versions prior to 2.0.1; 1.x has not been needed since the 2.0.0 release of consolidation/config, as 2.x supports all of the php versions we need.
+
 ### 2.0.6 2022-02-21
 
 * Symfony 6
