@@ -92,7 +92,7 @@ class ArrayUtil
             if (self::selectMerge($keyPrefix, $key, $selectionList)) {
                 return array_merge_recursive($merged[$key], $value);
             } else {
-                return self::mergeRecursiveSelect($merged[$key], $value, $selectionList, "${keyPrefix}${key}.");
+                return self::mergeRecursiveSelect($merged[$key], $value, $selectionList, "{$keyPrefix}{$key}.");
             }
         }
         return $value;
@@ -107,7 +107,7 @@ class ArrayUtil
      */
     protected static function selectMerge($keyPrefix, $key, $selectionList)
     {
-        return in_array("${keyPrefix}${key}", $selectionList);
+        return in_array("{$keyPrefix}{$key}", $selectionList);
     }
 
 
