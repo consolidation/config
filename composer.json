@@ -41,6 +41,9 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4.9"
+        },
+        "allow-plugins": {
+            "ocramius/package-verrsions": true
         }
     },
     "scripts": {
