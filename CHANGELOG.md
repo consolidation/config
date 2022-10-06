@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.1.2
+
+* Upgrade to grasmash/expander ^3
+
 ### 2.1.1 2022-06-22
 
 * PHP 8.2 compatibility: ${} string interpolation deprecated (#56)
