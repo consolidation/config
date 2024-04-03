@@ -92,7 +92,7 @@ jobs:
 
         dependencies:
           - locked
-        
+
         codecov:
           - false
 
@@ -113,6 +113,12 @@ jobs:
 
           - os: ubuntu-latest
             php-version: "8.2"
+            dependencies: highest
+            codecov: true
+            php-ini-values: assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=4096M, opcache.jit=1205
+
+          - os: ubuntu-latest
+            php-version: "8.3"
             dependencies: highest
             codecov: true
             php-ini-values: assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=4096M, opcache.jit=1205
@@ -147,7 +153,7 @@ jobs:
 
       - name: Make sure composer.json is valid before we start modifyig it
         run: composer validate
-        
+
       - name: Clear platform php configuration in case we need to update phpunit
         run: composer config --unset platform.php
 
@@ -167,7 +173,7 @@ jobs:
 
       - name: Run tests with phpunit
         run: composer unit
-      
+
       - name: Publish code coverage to Codecov
         if: matrix.codecov == true
         run: bash <(curl -s https://codecov.io/bash)
