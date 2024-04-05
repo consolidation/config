@@ -1,5 +1,11 @@
 # Changelog
 
+### 3.0.0
+
+* Add support for Symfony 7
+* Remove support for PHP versions < 8.2
+* Remove support for versions of Symfony < 7, and related dependency updates
+
 ### 2.1.2
 
 * Upgrade to grasmash/expander ^3
