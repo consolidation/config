@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.0
+
+* PHP 8.4
+
 ### 3.0.0
 
 * Add support for Symfony 7
