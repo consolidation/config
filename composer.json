@@ -22,7 +22,7 @@
         "php": ">=8.2.0",
         "dflydev/dot-access-data": "^3",
         "grasmash/expander": "^3",
-        "symfony/event-dispatcher": "^7"
+        "symfony/event-dispatcher": "^6 || ^7"
     },
     "require-dev": {
         "ext-json": "*",
