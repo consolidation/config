@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.1 2025-07-07
+
+* Support symfony/event-dispatcher v6 (#69)
+
 ### 3.1.0 2024-11-28
 
 * PHP 8.4
