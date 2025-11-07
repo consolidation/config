@@ -84,11 +84,11 @@ class ConfigTest extends TestBase
 
         // $defaults
         $defaultsProperty = $configClass->getProperty("defaults");
-        $defaultsProperty->setAccessible(true);
+        (\PHP_VERSION_ID < 80100) and $defaultsProperty->setAccessible(true);
 
         // $getDefaults
         $getDefaultsMethod = $configClass->getMethod("getDefaults");
-        $getDefaultsMethod->setAccessible(true);
+        (\PHP_VERSION_ID < 80100) and $getDefaultsMethod->setAccessible(true);
 
         // Test the config class
         $config = new Config($data);
