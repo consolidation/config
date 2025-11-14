@@ -113,6 +113,12 @@ jobs:
             dependencies: highest
             coverage: none
             php-ini-values: zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=2048M, opcache.jit=1205
+          - os: ubuntu-latest
+            php-version: "8.5"
+            tools: composer:snapshot
+            dependencies: highest
+            coverage: none
+            php-ini-values: zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=2048M, opcache.jit=1205
 
     steps:
       - name: Checkout
