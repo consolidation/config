@@ -71,7 +71,7 @@ jobs:
         run: ./tools/vendor/bin/roave-backward-compatibility-check --from=2.0.1
 
   tests:
-    name: Tests
+    name: Tests ${{ matrix.symfony && format('(Symfony {0})', matrix.symfony) || '' }}
 
     runs-on: ${{ matrix.os }}
 
@@ -96,6 +96,9 @@ jobs:
         codecov:
           - false
 
+        symfony:
+          - ""
+
         coverage:
           - pcov
         tools:
@@ -119,6 +122,16 @@ jobs:
             dependencies: highest
             coverage: none
             php-ini-values: zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=2048M, opcache.jit=1205
+
+          - os: ubuntu-latest
+            php-version: "8.2"
+            dependencies: highest
+            symfony: "7"
+
+          - os: ubuntu-latest
+            php-version: "8.2"
+            dependencies: highest
+            symfony: "8"
 
     steps:
       - name: Checkout
@@ -168,6 +181,10 @@ jobs:
       - name: Install highest dependencies with composer
         if: matrix.dependencies == 'highest'
         run: composer update --no-ansi --no-interaction --no-progress
+
+      - name: Require Symfony ${{ matrix.symfony }}
+        if: matrix.symfony != ''
+        run: composer require --no-interaction --no-progress symfony/event-dispatcher:^${{ matrix.symfony }} symfony/console:^${{ matrix.symfony }} symfony/yaml:^${{ matrix.symfony }}
 
       - name: Run tests with phpunit
         run: composer unit
