@@ -129,7 +129,7 @@ jobs:
             symfony: "7"
 
           - os: ubuntu-latest
-            php-version: "8.2"
+            php-version: "8.5"
             dependencies: highest
             symfony: "8"
 
