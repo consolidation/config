@@ -119,7 +119,7 @@ EOT;
         $application->setDispatcher($eventDispatcher);
 
         $application->setAutoExit(false);
-        $application->add($command);
+        $application->addCommand($command);
 
         $statusCode = $application->run($input, $output);
         $commandOutput = trim($output->fetch());
