@@ -68,10 +68,10 @@ jobs:
           composer --working-dir=tools require roave/backward-compatibility-check:^7
 
       - name: Run roave/backward-compatibility-check
-        run: ./tools/vendor/bin/roave-backward-compatibility-check --from=2.0.1
+        run: ./tools/vendor/bin/roave-backward-compatibility-check --from=3.2.1
 
   tests:
-    name: Tests ${{ matrix.symfony && format('(Symfony {0})', matrix.symfony) || '' }}
+    name: Tests (PHP ${{ matrix.php-version }}${{ matrix.symfony && format(', Symfony {0}', matrix.symfony) || '' }})
 
     runs-on: ${{ matrix.os }}
 
@@ -118,6 +118,12 @@ jobs:
             php-ini-values: zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=2048M, opcache.jit=1205
           - os: ubuntu-latest
             php-version: "8.5"
+            tools: composer:snapshot
+            dependencies: highest
+            coverage: none
+            php-ini-values: zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=2048M, opcache.jit=1205
+          - os: ubuntu-latest
+            php-version: "8.6"
             tools: composer:snapshot
             dependencies: highest
             coverage: none
